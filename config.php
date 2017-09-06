@@ -1,0 +1,1 @@
+/home/mary/www/config/config.php
