@@ -67,7 +67,7 @@ class MGrado extends CI_Model{
   }
 
   function porComponente($id){
-    $sConsulta = 'SELECT * FROM grado WHERE componente_id=\'' . $id . '\' ORDER BY id ASC';
+    $sConsulta = 'SELECT * FROM grado WHERE componente_id=\'' . $id . '\' AND status_id=30 ORDER BY codigo ASC';
     $obj = $this->Dbpace->consultar($sConsulta);
     $arr = array();
     if($obj->code == 0 ){

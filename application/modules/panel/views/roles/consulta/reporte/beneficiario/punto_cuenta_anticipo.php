@@ -152,7 +152,7 @@
          <br><br>
          &emsp;Por lo que me permito realizar esta tramitación con opinión favorable.<br><br>
 
-         <center><b>CNEL. EDUARDO JOSE MARTINEZ SALAS<BR>
+         <center><b>CNEL. JUAN GABRIEL PUERTAS TOVAR<BR>
          GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL<B><center>
 
          

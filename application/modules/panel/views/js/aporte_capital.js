@@ -120,7 +120,7 @@ function GenerarAporte(){
                             <th style="width: 120px;">Fecha</th>\
                             <th>Garantias</th>\
                             <th>Dias Adic.</th>\
-                            <th>Asignación A.</th>\
+                            <th>Dif. Asignación A.</th>\
                         </tr>\
                         </thead><tbody></tbody></table>');
 	var t = $('#reportearchivos').DataTable();

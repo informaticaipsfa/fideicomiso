@@ -69,6 +69,7 @@
                         <label>Cédula de Identidad:&nbsp;</label><label id="lblCedula"></label><br>
                         <label>Beneficiario:&nbsp;</label><label id="lblBeneficiario"></label>
                         <br><br>
+                        
 
                           <table id="reporteFiniquitos" class="table table-bordered table-hover">
                               <thead>
@@ -80,7 +81,8 @@
                                   <th >Componente</th>
                                   <th>Grado</th>
                                   <th style="width: 70px;">T. Servicio</th>
-                                  <th>Total (BsF.) </th>
+                                  <th> Total (Bs.) </th>
+                                  <!--<th> Total (BsS.) </th>-->
                                   <th>F. Finiquito</th>
                                   <th>Motivo o Concepto</th>
                                   <th>Estatus </th>

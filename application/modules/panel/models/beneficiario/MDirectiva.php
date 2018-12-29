@@ -63,7 +63,6 @@ class MDirectiva extends CI_Model{
     if(!isset($this->Dbpace)) $this->load->model('comun/Dbpace');
     //$this->_obtener();
   }
-
   /**
   * Obtener el Objeto Directiva Asociado a un Grado
   * El codigo de grado es la relacion entre grado y detalles de la directiva
@@ -311,5 +310,4 @@ class MDirectiva extends CI_Model{
     $rs = $this->Dbpace->consultar($sConsulta);
     return $rs;
   }
-
 }

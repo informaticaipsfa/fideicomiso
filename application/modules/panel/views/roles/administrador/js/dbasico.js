@@ -45,6 +45,7 @@ function consultar() {
             $("#P_TIEMPOSERVICIO").val(data.prima_tiemposervicio_aux);
             $("#P_NOASCENSO").val(data.prima_noascenso_aux);
             $("#P_PROFESIONALIZACION").val(data.prima_profesionalizacion_aux);
+            $("#P_COMPENSACION_ESPECIAL").val(data.prima_compensacion_especial_aux);
 
             //$("#asignacion_antiguedad").val(data.Calculo.asignacion_antiguedad);
             // Se cambio para desplegar la asignacion_antiguedad correcta segun situacion del beneficiario

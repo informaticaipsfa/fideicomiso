@@ -1,12 +1,12 @@
-<?php  
+<?php
 
   /**
   foreach ($Beneficiario->HistorialOrdenPagos as $c => $v) {
     if($v->id == $codigo){
       $finalidad = $v->motivo;
       $monto = $v->monto;
-    }  
-    
+    }
+
   }
   **/
   $partida_id = 0;
@@ -68,7 +68,7 @@
         break;
     }
     return $mes;
-    
+
   }
 
 
@@ -95,7 +95,7 @@ td{
 th {
     border: 1px solid #dddddd;
     text-align: left;
-    background-color: #dddddd; 
+    background-color: #dddddd;
     padding: 8px;
 }
 
@@ -108,7 +108,7 @@ th {
  <center>
  <table style="width: 700px">
  <tr>
-   <td style="width: 65%;  border: 0px solid #dddddd; text-align: center; font-size: 10px">    
+   <td style="width: 65%;  border: 0px solid #dddddd; text-align: center; font-size: 10px">
      REPÚBLICA BOLIVARIANA DE VENEZUELA<BR>
      MINISTERIO DEL PODER POPULAR PARA LA DEFENSA<BR>
      VICEMINISTERIO DE SERVICIOS, PERSONAL Y LOGISTICA<BR>
@@ -127,20 +127,20 @@ th {
  <table style="width: 700px;  text-align: justify;  font-size: 15px">
   <tr>
     <td>Nro.</td><td>320.600-<?php echo substr(md5($Beneficiario->cedula . $Beneficiario->fecha_ultima_modificacion), 0,6);?>/01</td>
-  </tr> 
+  </tr>
   <tr>
     <td>DE:</td><td><b>CNEL. GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL</b></td>
-  </tr> 
+  </tr>
   <tr>
-    <td>PARA:</td><td><b>CNEL. GERENTE DE DE FINANZAS A/C SUB. GERENCIA DE TESORERIA</b></td>    
-  </tr> 
+    <td>PARA:</td><td><b>CN. GERENTE DE DE FINANZAS A/C SUB. GERENCIA DE TESORERIA</b></td>
+  </tr>
   <tr>
     <td>ASUNTO:</td><td><b>SOLICITUD DE FINIQUITO</b></td>
-  </tr> 
+  </tr>
   <tr>
     <!--<td>REF.:</td><td><b>P.A.V</b></td> -->
     <td>REF.:</td><td><b>LOSSFAN (LEY NEGRO PRIMERO)</b></td>
-  </tr> 
+  </tr>
  </table>
  <table style="width: 700px">
   <tr>
@@ -148,18 +148,18 @@ th {
      <!--&emsp;&emsp;Mediante la presente comunicación me dirijo a Ud., en la oportunidad de autorizar al -->
       &emsp;&emsp;Tengo el honor de dirigirme a usted, en la oportunidad se estudie la posibilidad de autorizar al
      <b>
-     <?php 
-      echo $Beneficiario->Componente->Grado->nombre . ' '; 
+     <?php
+      echo $Beneficiario->Componente->Grado->nombre . ' ';
       echo $Beneficiario->nombres . ' ' . $Beneficiario->apellidos; ?>
-     </b>, 
-     titular de la cédula de identidad <b><?php echo $Beneficiario->cedula;?></b> para realizar trámites ante el Banco 
-     Venezuela, a fin de obtener el finiquito del monto total de Bs.<b>
+     </b>,
+     titular de la cédula de identidad <b><?php echo $Beneficiario->cedula;?></b> para realizar trámites ante el Banco
+     Venezuela, a fin de obtener el finiquito del monto total de Bs.S<b>
 
-     <?php 
+     <?php
         /**
         $monto = $Beneficiario->Calculo['saldo_disponible_aux'];
         if($Beneficiario->Calculo['interes_capitalizado_banco'] > 0){
-          $monto += $Beneficiario->Calculo['interes_capitalizado_banco'];   
+          $monto += $Beneficiario->Calculo['interes_capitalizado_banco'];
         }
         **/
         echo number_format($monto, 2, ',','.');
@@ -167,25 +167,25 @@ th {
      ?>.</b><br>
      <br>
      &emsp;&emsp;Motiva la presente comunicación, el hecho que el mencionado afiliado pasó a la reserva activa en  fecha <b>
-     <?php  
+     <?php
         $fecha_aux = $Beneficiario->fecha_retiro;
         if($fecha_aux != ''){
           $f = explode('-', $fecha_aux);
-          $fecha = $f[2] . '/' . $f[1] . '/' . $f[0];  
+          $fecha = $f[2] . '/' . $f[1] . '/' . $f[0];
           echo $fecha;
         }
 
-      ?></b>, y de acuerdo a lo establecido en la LOSSFAN, en sus artículos 56 y 57 y en el Reglamento de Pago de Asignación al Personal 
-      Militar, así como también las cláusulas décimo cuarta y décimo sexta del contrato firmado entre el IPSFA y esa 
-      Institución Fiduciaría, en fecha 17FEB2009 ante la Notaría Pública Tercera de Caracas, debe salir del sistema de 
+      ?></b>, y de acuerdo a lo establecido en la LOSSFAN, en sus artículos 56 y 57 y en el Reglamento de Pago de Asignación al Personal
+      Militar, así como también las cláusulas décimo cuarta y décimo sexta del contrato firmado entre el IPSFA y esa
+      Institución Fiduciaría, en fecha 17FEB2009 ante la Notaría Pública Tercera de Caracas, debe salir del sistema de
       Fideicomiso de la Asignación de Antiguedad.
      <br>
      &emsp;&emsp;Sin otro particular al cual hacer referencia, se despide de ustedes, quedando a sus gratas órdenes.
      <br>
      <center>
-        Atentamente 
+        Atentamente
         <br><br><b>
-        CNEL. EDUARDO JOSE MARTINEZ SALAS<BR>
+        CNEL. JUAN MIGUEL QUINTERO MORALES<BR>
         GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL<BR></b>
      </center>
      <br>
@@ -193,16 +193,16 @@ th {
      Notas:<br>
      <?php echo $Beneficiario->observacion;?>
      <br>
-     <?php 
+     <?php
         if ( $Beneficiario->Calculo['monto_recuperar_aux'] > 0){
-          echo 'Moto a recuperar a favor del Fondo de Fideicomiso por la cantidad de: ' . $Beneficiario->Calculo['monto_recuperar'] . '<br>';
+          echo 'Monto a recuperar a favor del Fondo de Fideicomiso por la cantidad de: ' . $Beneficiario->Calculo['monto_recuperar'] . '<br>';
           echo 'Partida Recuperación: ' . $partida;
         }
       ?><br>
      <br>
      EMG/<?php echo $Beneficiario->usuario_modificacion;?>
    </td>
-   
+
  </tr>
  </table>
 

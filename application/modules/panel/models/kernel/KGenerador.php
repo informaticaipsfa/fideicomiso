@@ -63,13 +63,15 @@ class KGenerador extends CI_Model{
     ';
   }
 
-
+  /**
+  * Archivo de banco nuevos
+  */
   function AperturaTXT($path, $archivo, $tipo){
     $this->load->model('kernel/KSensor');
 
-    $m = 34;
-    if($tipo == 1)$m = 35;
-    if($tipo == 2)$m = 33;
+    $m = 36;
+    if($tipo == 1)$m = 37;
+    if($tipo == 2)$m = 35;
     
 
     $sub = substr($path, 1, 33);
@@ -83,7 +85,7 @@ class KGenerador extends CI_Model{
            if($sum > 0){ 
               $l = explode(";", $buffer);
               
-              if($l[29] == 0 && $l[31] == 0 && $l[32] == 0){
+              if($l[31] == 0 && $l[32] == 0 && $l[34] == 0){
                 //echo $l[0] . " -> " . $l[29] . " -> " . $l[31] . " -> " . $l[32] . "<br>";
                 $nombre = '';
                 $cedula = $this->completarCero(9, $l[0], '0');
@@ -102,9 +104,11 @@ class KGenerador extends CI_Model{
                 $monto_s = $this->completarCero(13, $monto, '0');
                 $ganancia = '0';
                 $numeroyubicacion = $this->completarCero(15, " ", " ");
-                $linea = $plan . $nac . $cedula .  $nombre . $edocivil . $campo . $monto_s;
-                fputs($file,$linea);
-                fputs($file,"\n");
+                if($monto > 0){ //**SE REALIZO ESTA MODIFICACION PARA QUE TS<0 NO SALGAN EN EL ARCHIVO TXT
+                  $linea = $plan . $nac . $cedula .  $nombre . $edocivil . $campo . $monto_s;
+                  fputs($file,$linea);
+                  fputs($file,"\n");
+                }
                 $cantidad++;
 
               }
@@ -131,13 +135,15 @@ class KGenerador extends CI_Model{
 
 
 
-
+  /**
+  * Archivo de banco viejos
+  */
   function AporteTXT($path, $archivo, $tipo){
     $this->load->model('kernel/KSensor');
 
-    $m = 34;
-    if($tipo == 1)$m = 35;
-    if($tipo == 2)$m = 33;
+    $m = 36;
+    if($tipo == 1)$m = 37;
+    if($tipo == 2)$m = 35;
     
  
     $sub = substr($path, 1, 33);
@@ -151,7 +157,7 @@ class KGenerador extends CI_Model{
         while (($buffer = fgets($handle, 4096)) !== false) {
           if($sum > 0){ 
               $l = explode(";", $buffer);
-              if($l[29] > 0 ||  $l[31] > 0 || $l[32] > 0){  
+              if($l[31] > 0 ||  $l[32] > 0 || $l[34] > 0){  
                
                 $nac = 'V';
                 $cedula = $this->completarCero(9, $l[0], '0');
@@ -170,7 +176,7 @@ class KGenerador extends CI_Model{
                 $cuoanu = '000';
                 $linea = $plan . $nac . $cedula . $tiptrn . $tippre . $frmpgo . $monto_s . $tippta . $tipcue . $numcue . $tasaint . $cbrintatp . $cuomen . $mtoanu . $cuoanu;
                 fputs($file,$linea);
-                fputs($file,"\n");   
+                fputs($file,"\n"); 
                 $cantidad++;             
               }
           }

@@ -127,7 +127,8 @@ function HacerBotones(estatus){
             sBoton += '</button>';
             break;
         case '203':
-            
+            sBoton += '<button id="btnReincorporar"  type="button" class="btn btn-primary" title="Reincorporar" onclick="ventana(\'activar\')"><i class="fa fa-rotate-left" ></i></button>';                                
+            sBoton += '</button>';
             break;
         case '204':
             break;
@@ -342,7 +343,6 @@ function activar(){
     limpiar();
  
 }
-
 
 
 function limpiar(){

@@ -50,11 +50,19 @@ function consultar() {
             $("#P_TIEMPOSERVICIO").val(data.prima_tiemposervicio_aux);
             $("#P_NOASCENSO").val(data.prima_noascenso_aux);
             $("#P_PROFESIONALIZACION").val(data.prima_profesionalizacion_aux);
+            $("#P_COMPENSACION_ESPECIAL").val(data.prima_compensacion_especial_aux);
 
-            //$("#asignacion_antiguedad").val(data.Calculo.asignacion_antiguedad);
-            // Se cambio para desplegar la asignacion_antiguedad correcta segun situacion del beneficiario
+            /*SE REALIZO ESTE CAMBIO PARA EVALUAR POR fecha_retiro Y fecha_ultima_modificacion CON EL 
+            FIN DE MOSTRAR LA ASIGNACION RECONVERTIDA PARA ACTIVOS Y FINIQUITOS CON FECHA MAYOR E IGUAL AL 
+            20-08-2018 O CON ASIGNACION SIN RECONVERTIR PARA FINIQUITOS CON FECHA MENOR 20-08-2018*/
             if(data.fecha_retiro != null && data.fecha_retiro != '') {
-                $("#asignacion_antiguedad").val(data.Calculo.asignacion_antiguedad_fin);
+                if(data.fecha_retiro < '2018-08-20' && data.fecha_ultima_modificacion >= '2018-08-20') {
+                    $("#asignacion_antiguedad").val(data.Calculo.asignacion_antiguedad_rec);
+                    $("#asignacion_antiguedad_aux").val(data.Calculo.asignacion_antiguedad_rec_aux);
+                }else if(data.fecha_retiro < '2018-08-20' && data.fecha_ultima_modificacion < '2018-08-20'){
+                    $("#asignacion_antiguedad").val(data.Calculo.asignacion_antiguedad_fin);
+                    $("#asignacion_antiguedad_aux").val(data.Calculo.asignacion_antiguedad_fin_aux);
+                }
             }else{
                 $("#asignacion_antiguedad").val(data.Calculo.asignacion_antiguedad);
             }
@@ -64,13 +72,20 @@ function consultar() {
             $("#total_aportados").val(data.Calculo.total_aportados);
             $("#asignacion_depositada").val(data.Calculo.asignacion_depositada);
             $("#saldo_disponible").val(data.Calculo.saldo_disponible);
+
+             /*SE REALIZO ESTE CAMBIO PARA EVALUAR POR fecha_retiro Y fecha_ultima_modificacion CON EL 
+            FIN DE MOSTRAR LA DIFERENCIA_AA RECONVERTIDA PARA ACTIVOS Y FINIQUITOS CON FECHA MAYOR E IGUAL AL 
+            20-08-2018 O CON DIFERENCIA_AA SIN RECONVERTIR PARA FINIQUITOS CON FECHA MENOR 20-08-2018*/
             if(data.fecha_retiro != null && data.fecha_retiro != '') {
-                $("#diferencia_AA").val(data.Calculo.asignacion_diferencia);
-                $("#saldo_disponible").val('0');
-            }else{
-                $("#diferencia_AA").val(data.Calculo.diferencia_AA);
-            }
-            //$("#diferencia_AA").val(data.Calculo.diferencia_AA);
+                if(data.fecha_retiro < '2018-08-20' && data.fecha_ultima_modificacion >= '2018-08-20') {
+                    $("#diferencia_AA").val(data.Calculo.asignacion_diferencia_rec);
+                    $("#saldo_disponible").val('0');
+                }else{
+                    $("#diferencia_AA").val(data.Calculo.asignacion_diferencia);
+                    $("#saldo_disponible").val('0');
+                }
+            }else{ $("#diferencia_AA").val(data.Calculo.asignacion_diferencia);}
+                    
             $("#fecha_ultimo_deposito").val(data.Calculo.fecha_ultimo_deposito);
             $("#fecha_ultimo_anticipo").val(data.Calculo.fecha_ultimo_anticipo);
             $("#anticipos").val(data.Calculo.anticipos);
@@ -82,7 +97,7 @@ function consultar() {
                 $("#lblMedida").text('Beneficiario con Medidas Judiciales');
 
             });
-            
+
             _MOVIMIENTO = data.HistorialDetalleMovimiento;
 
             $("#porcentaje_cancelado").val(data.Calculo.porcentaje_cancelado);
@@ -163,17 +178,17 @@ function listarHistorialSueldo(_Data){
             'print'
         ],
 
-        "language": { 
-            "lengthMenu": "Mostrar _MENU_ registros por pagina", 
-            "zeroRecords": "No se encontraron registros", 
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron registros",
             "info": "P&aacutegina _PAGE_ of _PAGES_",
-            "sPrint": "Imprimir", 
+            "sPrint": "Imprimir",
             "infoEmpty": "No hay registros"
- 
+
         }
-    });    
+    });
     t.clear().draw();
-        
+
     var i = 0;
     $.each(_Data, function (p,q){
         i++;
@@ -205,7 +220,7 @@ function listarHistorialMovimiento(tipo){
                           </table>')
 
     var tab = $('#reporteMovimientos').DataTable({
-        "paging":  true,        
+        "paging":  true,
         "ordering": false,
         "info":     true,
         "searching": false,
@@ -213,10 +228,10 @@ function listarHistorialMovimiento(tipo){
         "buttons": [
             'print'
         ]
-    });    
-    
+    });
+
     tab.clear().draw();
-        
+
     var i = 0;
     $.each(_MOVIMIENTO.Detalle, function (x,y){
         $.each(y, function(p, q){
@@ -227,29 +242,29 @@ function listarHistorialMovimiento(tipo){
             fecha = cargarFecha(q.fecha);
             observacion = q.observacion;
             if (tipo != null){
-                if(tipo == q.tipo){                    
+                if(tipo == q.tipo){
                      tab.row.add( [
                         i,
                         fecha,
                         detalle,
                         monto.formatMoney(2, ',', '.'),
                         observacion,
-                    ] ).draw( false );        
+                    ] ).draw( false );
                 }
             }else{
-                
+
                  tab.row.add( [
                     i,
                     fecha,
                     detalle,
                     monto.formatMoney(2, ',', '.'),
                     observacion,
-                ] ).draw( false );    
+                ] ).draw( false );
             }
-            
+
         });
-                
-       
+
+
     });
 
 

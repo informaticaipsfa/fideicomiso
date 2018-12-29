@@ -30,8 +30,7 @@ class MHistorialMovimiento extends CI_Model{
 
 	var $codigo = '';
 
-
-
+	
 	function __construct(){
 		parent::__construct();
 		if(!isset($this->Dbpace)) $this->load->model('comun/Dbpace');
@@ -63,10 +62,31 @@ class MHistorialMovimiento extends CI_Model{
 
   }
 
-	function listar($cedula = ''){
+	function listar($cedula = '', $retiro = '', $fModificacion = ''){
 		$arr = array();
-		$sConsulta = 'select tipo_movimiento_id, sum(monto) AS monto, MAX(f_contable) AS f_contable from movimiento where cedula =\'' . $cedula . '\' GROUP BY tipo_movimiento_id';
-		$obj = $this->Dbpace->consultar($sConsulta);
+		/* SE CREO EL SELECT $sConsulta PARA PODER LEER LOS MOVIMIENTOS ANTES DEL 20-08-2018 PARA RECONVERTIRLOS Y LEER TAMBIEN 
+		LOS MOVIMIENTOS GENERADOS DESPUES DEL 20-08-2018 QUE YA SE HAN GUARDADO RECONVERTIDOS */ 
+		$sConsulta = 'select tipo_movimiento_id, round((sum(monto)/100000),2) AS monto, MAX(f_contable) AS f_contable into temp reconversion from movimiento where cedula = \'' . $cedula . '\' and f_contable<\'2018-08-20\'
+                      GROUP BY tipo_movimiento_id union select tipo_movimiento_id, sum(monto) AS monto, MAX(f_contable) AS f_contable from movimiento where cedula = \'' . $cedula . '\' and f_contable>=\'2018-08-20\'
+                      GROUP BY tipo_movimiento_id';
+        /* SE CREO EL SELECT $sConsulta1 PARA PODER SUMAR LOS MOVIMIENTOS ANTES DEL 20-08-2018 CON LOS MOVIMIENTOS GENERADOS DESPUES DEL 
+        20-08-2018 */
+        $sConsulta1 = 'select tipo_movimiento_id, sum(monto) AS monto, MAX(f_contable) AS f_contable from reconversion GROUP BY tipo_movimiento_id';
+		
+		/* SE CREO EL SELECT $sConsulta2 PARA PODER SUMAR SOLO LOS MOVIMIENTOS DEL PERSONAL CON FECHA DE RETIRO ANTES DEL 20-08-2018 */
+		$sConsulta2 = 'select tipo_movimiento_id, sum(monto) AS monto, MAX(f_contable) AS f_contable from movimiento where cedula =\'' . $cedula . '\' GROUP BY tipo_movimiento_id';
+		
+		if ($retiro != ''){ 
+			if($fModificacion >= '2018-08-20'){
+				$obj = $this->Dbpace->consultar($sConsulta);
+				$obj = $this->Dbpace->consultar($sConsulta1);
+		    }else if ($retiro < '2018-08-20'){ 
+				$obj = $this->Dbpace->consultar($sConsulta2);
+			}
+		}else{ 
+            $obj = $this->Dbpace->consultar($sConsulta); 
+            $obj = $this->Dbpace->consultar($sConsulta1); 
+        }
 		//echo $sConsulta;
 		$rs = $obj->rs;
 		foreach ($rs as $c => $v) {
@@ -114,12 +134,12 @@ class MHistorialMovimiento extends CI_Model{
 		$sDonde = '';
 		if($tipo > 0) $sDonde = ' AND tipo_movimiento_id=\'' . $tipo . '\' ';
 		$sConsulta = 'SELECT movimiento.id, movimiento.codigo, movimiento.motivo_id, partida_id, tipo_movimiento_id, 
-			transaccion_id, monto, observaciones, f_contable, f_creacion, partida.codigo AS partida, tipo_movimiento.nombre AS movnombre
+			transaccion_id, monto as monto, observaciones, f_contable, f_creacion, partida.codigo AS partida, tipo_movimiento.nombre AS movnombre
 			FROM movimiento 
 				LEFT JOIN tipo_movimiento ON movimiento.tipo_movimiento_id=tipo_movimiento.id 
 				LEFT JOIN partida ON movimiento.partida_id=partida.id
  			WHERE cedula =\'' . $cedula . '\'' .  $sDonde . '
-			ORDER BY tipo_movimiento_id';
+			ORDER BY tipo_movimiento_id, f_contable';
 		$obj = $this->Dbpace->consultar($sConsulta);	
 		//print_r($obj);
 
@@ -138,7 +158,7 @@ class MHistorialMovimiento extends CI_Model{
 				$hm->detalle = $v->movnombre;
 				$hm->observacion = $v->observaciones;
 				$hm->monto = $v->monto;	
-				$hm->monto_aux =  number_format($v->monto, 2, ',','.');	
+				$hm->monto_aux = number_format($v->monto, 2, ',','.');	
 				$hm->partida = $v->partida_id;	
 				$hm->partida_des = $v->partida;
 

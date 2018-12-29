@@ -1,9 +1,9 @@
-<?php 
+<?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 /**
- * MamonSoft 
+ * MamonSoft
  *
  * Calculos
  *
@@ -16,7 +16,7 @@ if (!defined('BASEPATH'))
  */
 
 class MCalculo extends CI_Model{
-  
+
   /**
   * @var MBeneficiario
   */
@@ -31,7 +31,7 @@ class MCalculo extends CI_Model{
   public function __construct(){
     parent::__construct();
     //$this->load->model('beneficiario/MDirectiva');
-   
+
 
   }
 
@@ -39,7 +39,9 @@ class MCalculo extends CI_Model{
   function iniciarCalculosBeneficiario(MBeneficiario & $Beneficiario){
     $this->load->model('beneficiario/MDirectiva');
     $this->load->model('beneficiario/MPrima');
-    $this->Beneficiario = $Beneficiario;   
+    $this->load->model('beneficiario/MOrdenPago');
+    $this->Beneficiario = $Beneficiario;
+    $this->MBeneficiario->HistorialOrdenPagos = $this->MOrdenPago->listarPorCedula($this->Beneficiario->cedula);
     $this->AntiguedadGrado();
     $this->TiempoServicios();
     $codigo_grado = $this->Beneficiario->Componente->Grado->codigo;
@@ -55,19 +57,24 @@ class MCalculo extends CI_Model{
     $this->SueldoIntegral();
     $this->AsignacionAntiguedad();
     $this->AsignacionFiniquito(); //se agrego rutina para calcular AA para finiquito
+    $this->AsignacionFiniquitoReconversion(); //se agrego rutina para calcular AA para finiquito reconvertida
 
     $monto = isset($this->Beneficiario->MedidaJudicial[1])? $this->Beneficiario->MedidaJudicial[1]->monto : 0;
     $porcentaje = isset($this->Beneficiario->MedidaJudicial[1])? $this->Beneficiario->MedidaJudicial[1]->porcentaje : 0;
     if ($Beneficiario->fecha_retiro != ''){
-        $total_embargos = $monto + ($this->Beneficiario->asignacion_antiguedad_fin * $porcentaje) / 100;
+        $por = ($this->Beneficiario->asignacion_antiguedad_fin * $porcentaje) / 100;
+        $total_embargos = $monto + $por;
     }else{
-        $total_embargos = $monto + ($this->Beneficiario->asignacion_antiguedad * $porcentaje) / 100;    
+        $por = ($this->Beneficiario->asignacion_antiguedad * $porcentaje) / 100;
+        $total_embargos = $monto + $por;
     }
     $this->Beneficiario->Calculo = array(
       'asignacion_antiguedad' => number_format($this->Beneficiario->asignacion_antiguedad, 2, ',','.'),
-      'asignacion_antiguedad_fin' => number_format($this->Beneficiario->asignacion_antiguedad_fin, 2, ',','.'), //se agrego AA por el de la 
+      'asignacion_antiguedad_fin' => number_format($this->Beneficiario->asignacion_antiguedad_fin, 2, ',','.'), //se agrego AA por el de la
       'asignacion_antiguedad_fin_aux' => $this->Beneficiario->asignacion_antiguedad_fin, //se agrego AA por el de la rutina AsignacionFiniquito
       'asignacion_antiguedad_aux' => $this->Beneficiario->asignacion_antiguedad,
+      'asignacion_antiguedad_rec' => number_format($this->Beneficiario->asignacion_antiguedad_rec, 2, ',','.'),
+      'asignacion_antiguedad_rec_aux' => $this->Beneficiario->asignacion_antiguedad_rec,
       'capital_banco' => number_format($this->DepositoBanco(), 2, ',','.'),
       'capital_banco_aux' => $this->DepositoBanco(),
       'asignacion_depositada' => number_format($this->Asignacion_Depositada(), 2, ',','.'),
@@ -80,8 +87,8 @@ class MCalculo extends CI_Model{
       'anticipos' => number_format($this->Anticipos(), 2, ',','.'),
       'anticipos_aux' => $this->Anticipos(),
       'total_aportados' => number_format($this->Total_Aportados(), 2, ',','.'),
-      'saldo_disponible' => number_format($this->Saldo_Disponible(), 2, ',','.'),
-      'saldo_disponible_aux' => $this->Saldo_Disponible(),      
+      'saldo_disponible' => number_format($this->Saldo_Disponible()-$this->MontoRecuperadoActivo(), 2, ',','.'),
+      'saldo_disponible_aux' => $this->Saldo_Disponible(),
       'saldo_disponible_fini' => number_format($this->Saldo_DisponibleFiniquito(), 2, ',','.'),
       'saldo_disponible_fini_aux' => $this->Saldo_DisponibleFiniquito()-$this->MontoRecuperadoActivo(),
       'diferencia_AA' => number_format($this->Diferencia_Asignacion(), 2, ',','.'),
@@ -95,13 +102,16 @@ class MCalculo extends CI_Model{
       'monto_recuperar_aux' => $this->Monto_Recuperar(),
       'asignacion_diferencia' => number_format($this->Asignacion_Diferencia(), 2, ',','.'),
       'asignacion_diferencia_aux' => $this->Asignacion_Diferencia(),
-      //'comision_servicios' => '0,00', se cambion para que mostrara el monto de comision de servicio
+      // Se agregaron estas variables para mostrar la diferencia de asignacion reconvertida
+      'asignacion_diferencia_rec' => number_format($this->Asignacion_Diferencia_rec(), 2, ',','.'),
+      'asignacion_diferencia_rec_aux' => $this->Asignacion_Diferencia_rec(),
+      // se cambion para que mostrara el monto de comision de servicio
       'comision_servicios' => number_format($this->ComisionServicio(), 2, ',','.'),
       'comision_servicios_aux' => $this->ComisionServicio(),
 
       'monto_recuperado' => number_format($this->MontoRecuperadoActivo(), 2, ',','.'),
       'monto_recuperado_aux' => $this->MontoRecuperadoActivo(),
-     
+
       'fallecimiento_actoservicio' => number_format($this->Fallecimiento_Acto_Servicio(), 2, ',','.'),
       'fallecimiento_fueraservicio' => number_format($this->Fallecimiento_Fuera_Servicio(), 2, ',','.'),
       'fallecimiento_actoservicio_aux' => $this->Fallecimiento_Acto_Servicio(),
@@ -110,8 +120,9 @@ class MCalculo extends CI_Model{
       'medida_judicial_activas' => number_format($this->MedidaJudicialActiva(), 2, ',','.'),
       'medida_judicial_activas_aux' => $this->MedidaJudicialActiva(),
       'total_embargos' => number_format($total_embargos, 2, ',','.'),
-      'total_embargos_aux' => $total_embargos
-       
+      'total_embargos_aux' => $total_embargos,
+      'porcentaje' => $por
+
     );
     $this->Beneficiario->prima_transporte_aux = number_format($this->Beneficiario->prima_transporte, 2, ',','.');
     $this->Beneficiario->prima_descendencia_aux = number_format($this->Beneficiario->prima_descendencia, 2, ',','.');
@@ -119,7 +130,8 @@ class MCalculo extends CI_Model{
     $this->Beneficiario->prima_noascenso_aux = number_format($this->Beneficiario->prima_noascenso, 2, ',','.');
     $this->Beneficiario->prima_tiemposervicio_aux = number_format($this->Beneficiario->prima_tiemposervicio, 2, ',','.');
     $this->Beneficiario->prima_profesionalizacion_aux = number_format($this->Beneficiario->prima_profesionalizacion, 2, ',','.');
-    
+    $this->Beneficiario->prima_compensacion_especial_aux = number_format($this->Beneficiario->prima_compensacion_especial, 2, ',','.');
+
   }
 
 
@@ -132,30 +144,30 @@ class MCalculo extends CI_Model{
   * @return int
   */
   private function __fechaReconocida($ano_reconocido = 0, $mes_reconocido = 0, $dia_reconocido = 0){
-    
+
     list($ano,$mes,$dia) = explode("-",$this->Beneficiario->fecha_ingreso);
-    $anoR = $ano - $this->Beneficiario->ano_reconocido;    
+    $anoR = $ano - $this->Beneficiario->ano_reconocido;
     $mesR = $mes - $this->Beneficiario->mes_reconocido;
-    $diaR = $dia - $this->Beneficiario->dia_reconocido; 
-    
+    $diaR = $dia - $this->Beneficiario->dia_reconocido;
+
 
 	  if($diaR < 0) {
       $mesR--;
       $diaR = 30 + $diaR;
     }
-    
+
     if($mesR < 0){
       $anoR--;
       $mesR = 12 + $mesR;
-    } 
-   
+    }
+
     $fecha = $anoR .'-' . $mesR  . '-' . $diaR;
 
     $this->Beneficiario->fecha_ingreso_reconocida = $fecha;
     $anos = $this->__restarFecha($fecha, $this->Beneficiario->fecha_retiro);
     //n | e __restarFecha
     return $anos;
-  } 
+  }
 
   /**
   * Permite restar fechas exactas
@@ -166,12 +178,12 @@ class MCalculo extends CI_Model{
   */
   private function __restarFecha($fecha = '', $fecha_r = '', $ant = FALSE){
 
- 
+
 
     if($fecha_r == ''){
       $fecha_retiro = date('Y-m-d');
     }else{
-      $fecha_retiro =  $fecha_r; 
+      $fecha_retiro =  $fecha_r;
 
     }
 
@@ -181,7 +193,7 @@ class MCalculo extends CI_Model{
     $dia_r = $fecha_r[2];
     list($ano,$mes,$dia) = explode("-",$fecha);
 
-   
+
     if ($dia_r < $dia){
       $dia_dif =  ($dia_r+30) - $dia; //27 -5
       $mes_r--;
@@ -224,7 +236,7 @@ class MCalculo extends CI_Model{
   function AntiguedadGrado($fechaUltimoAscenso = ''){
 
     if(isset($this->Beneficiario)){
-      
+
       $anos = $this->__restarFecha($this->Beneficiario->fecha_ultimo_ascenso, $this->Beneficiario->fecha_retiro, TRUE);
 
       $this->Beneficiario->antiguedad_grado = $anos['e'];
@@ -233,7 +245,7 @@ class MCalculo extends CI_Model{
       $anos = $this->__restarFecha($fechaUltimoAscenso);
       return $anos['e'];
     }
-    
+
   }
 
   /**
@@ -257,8 +269,8 @@ class MCalculo extends CI_Model{
         $this->Beneficiario->tiempo_servicio = $anos['e'];
         $this->Beneficiario->tiempo_servicio_aux = $anos['n'];
       }
-      
-              
+
+
     }else{
       $anos = $this->__restarFecha($fechaIngreso);
       return $anos['e'];
@@ -278,17 +290,17 @@ class MCalculo extends CI_Model{
   *
   * @access public
   * @param double
-  * @param int 
+  * @param int
   * @return double
   */
-  public function SueldoGlobal($primas = array(), $sueldo_global = 0.00){    
+  public function SueldoGlobal($primas = array(), $sueldo_global = 0.00){
     $sum = 0;
     $primas = $this->Beneficiario->Prima;
     $sueldo_global = $this->Beneficiario->sueldo_base;
     foreach ($primas as $key => $value) {
      foreach ($value as $k => $v) {
        $sum += $v;
-       
+
      }
     }
     $cal = round($sum + $sueldo_global, 2);
@@ -298,15 +310,15 @@ class MCalculo extends CI_Model{
   /**
   *	Alicuota Bono Aguinaldo #00
   * X = ((90 * SG)/30)/12
-  * 
+  *
   * SG = Sueldo Global
   * Se agrego las condiciones para evaluar cuando se debe calcular con 90/105/120 dias
   * @access public
   * @return double
   */
-  
+
 public function AlicuotaAguinaldo($sueldo_global = 0){
-    
+
     if(isset($this->Beneficiario) && ($this->Beneficiario->fecha_retiro == '')){
         $sueldo_global = $this->Beneficiario->sueldo_global;
         $cal =  round(((120 * $sueldo_global)/30)/12, 2);
@@ -323,7 +335,7 @@ public function AlicuotaAguinaldo($sueldo_global = 0){
         $sueldo_global = $this->Beneficiario->sueldo_global;
         $cal =  round(((90 * $sueldo_global)/30)/12, 2);
         $this->Beneficiario->aguinaldos = $cal;
-        $this->Beneficiario->aguinaldos_aux = number_format($cal, 2, ',','.'); 
+        $this->Beneficiario->aguinaldos_aux = number_format($cal, 2, ',','.');
 
       }else{
         $sueldo_global = $this->Beneficiario->sueldo_global;
@@ -345,19 +357,19 @@ public function AlicuotaAguinaldo($sueldo_global = 0){
   * @access public
   * @return double
   */
-  
-public function AlicuotaVacaciones($sueldo_global = 0){   
+
+public function AlicuotaVacaciones($sueldo_global = 0){
     //Fecha auxiliar utiliza aux - Menor Robando Tiempo y Antigueddad
 
       $dia = 0;
       if(isset($this->Beneficiario) && ($this->Beneficiario->fecha_retiro == '' || $this->Beneficiario->fecha_retiro > '2016-12-31')){
             $sueldo_global = $this->Beneficiario->sueldo_global;
             $cal = round(((50 * $sueldo_global)/30)/12, 2);
-            $this->Beneficiario->vacaciones = $cal; 
-            $this->Beneficiario->vacaciones_aux = number_format($cal, 2, ',','.'); 
+            //$this->Beneficiario->vacaciones = $cal;
+            //$this->Beneficiario->vacaciones_aux = number_format($cal, 2, ',','.');
 
 
-       }else if($this->Beneficiario->fecha_retiro <= '2016-12-31'){   
+       }else if($this->Beneficiario->fecha_retiro <= '2016-12-31'){
         $TM = $this->Beneficiario->tiempo_servicio;
           if ($TM > 0 && $TM <= 14) {
             $dia = 40;
@@ -369,11 +381,12 @@ public function AlicuotaVacaciones($sueldo_global = 0){
 
         $sueldo_global = $this->Beneficiario->sueldo_global;
         $cal = round((($dia * $sueldo_global)/30)/12, 2);
-        $this->Beneficiario->vacaciones = $cal; 
-        $this->Beneficiario->vacaciones_aux = number_format($cal, 2, ',','.'); 
-
-
+        //$this->Beneficiario->vacaciones = $cal;
+        //$this->Beneficiario->vacaciones_aux = number_format($cal, 2, ',','.');
         }
+
+      $this->Beneficiario->vacaciones = $cal;
+      $this->Beneficiario->vacaciones_aux = number_format($cal, 2, ',','.');
  }
 
   /**
@@ -408,7 +421,6 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   */
 
   public function AsignacionAntiguedad(){
-    //$this->Beneficiario->asignacion_antiguedad_fin = $this->Beneficiario->sueldo_integral * $this->Beneficiario->tiempo_servicio_aux;
     $this->Beneficiario->asignacion_antiguedad = $this->Beneficiario->sueldo_integral * $this->Beneficiario->tiempo_servicio;
     $this->Beneficiario->asignacion_antiguedad_aux = number_format($this->Beneficiario->asignacion_antiguedad, 2, ',','.');
     return $this->Beneficiario->asignacion_antiguedad;
@@ -416,6 +428,9 @@ public function AlicuotaVacaciones($sueldo_global = 0){
 
  /**
   * Asignacion de Antiguedad #007
+  * para los calculos de finiquito
+  * con la directivas a partir del
+  * 20-08-2018
   * X = SI * TS
   *
   * SI = Sueldo Integral
@@ -426,11 +441,29 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   */
   public function AsignacionFiniquito(){
     $this->Beneficiario->asignacion_antiguedad_fin = $this->Beneficiario->sueldo_integral * $this->Beneficiario->tiempo_servicio_aux;
-    //$this->Beneficiario->asignacion_antiguedad = $this->Beneficiario->sueldo_integral * $this->Beneficiario->tiempo_servicio;
     $this->Beneficiario->asignacion_antiguedad_fin_aux = number_format($this->Beneficiario->asignacion_antiguedad_fin, 2, ',','.');
     return $this->Beneficiario->asignacion_antiguedad_fin;
   }
 
+  /**
+  * Asignacion de Antiguedad #007
+  * para el manejo de los de finiquito
+  * realizados con directivas anteriores
+  * al 20-08-2018
+  * X = SI * TS
+  *
+  * SI = Sueldo Integral
+  * TS = Prima Tiempo de Servicio
+  *
+  * @access public
+  * @return double
+  */
+  public function AsignacionFiniquitoReconversion(){
+    $this->Beneficiario->asignacion_antiguedad_fin = $this->Beneficiario->sueldo_integral * $this->Beneficiario->tiempo_servicio_aux;
+    $this->Beneficiario->asignacion_antiguedad_rec = round(($this->Beneficiario->asignacion_antiguedad_fin/100000),2);
+    $this->Beneficiario->asignacion_antiguedad_rec_aux = number_format($this->Beneficiario->asignacion_antiguedad_rec, 2, ',','.');
+    return $this->Beneficiario->asignacion_antiguedad_rec;
+  }
    /**
   * Comision de Servicio
   * CODIGO MOVIMIENTO: 28
@@ -469,7 +502,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
 
     return $DepositoBanco;
   }
- 
+
 
   /**
   * Fecha del Ultimo deposito es tomada de la ultima garantia o Aporte capital
@@ -482,7 +515,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
     $fecha = '';
     $fecha_aux1 = isset($this->Beneficiario->HistorialMovimiento[32]) ? $this->Beneficiario->HistorialMovimiento[32]->fecha : '';
     $fecha_aux2 = isset($this->Beneficiario->HistorialMovimiento[3]) ? $this->Beneficiario->HistorialMovimiento[3]->fecha : '';
-    
+
     if($fecha_aux1 != '' or $fecha_aux2 != ''){
       $f1 = explode('-', $fecha_aux1);
       $f2 = explode('-', $fecha_aux2);
@@ -493,7 +526,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
         $fecha = $f2[2] . '-' . $f2[1] . '-' . $f2[0];
       }
     }else{
-         $fecha = '';  
+         $fecha = '';
       }
     return $fecha;
   }
@@ -509,7 +542,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   }
 
   /**
-  * Garantias 
+  * Garantias
   * CODIGO MOVIMIENTO: 32
   *
   * @access public
@@ -517,6 +550,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   */
   public function Garantias(){
     $garantias = isset($this->Beneficiario->HistorialMovimiento[32]) ? $this->Beneficiario->HistorialMovimiento[32]->monto : 0;
+
     return $garantias;
   }
 
@@ -529,6 +563,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   */
   public function Dias_Adicionales(){
     $diasA = isset($this->Beneficiario->HistorialMovimiento[31]) ? $this->Beneficiario->HistorialMovimiento[31]->monto : 0;
+
     return $diasA;
   }
 
@@ -538,7 +573,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   * @access public
   * @return double
   */
-  public function Total_Aportados(){   
+  public function Total_Aportados(){
     return $this->DepositoBanco() + $this->Garantias() + $this->Dias_Adicionales();
   }
 
@@ -550,11 +585,37 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   * @return double
   */
   public function Anticipos(){
-    
+
     $anticipos = isset($this->Beneficiario->HistorialMovimiento[5]) ? $this->Beneficiario->HistorialMovimiento[5]->monto : 0;
     $anticipos_reversado = isset($this->Beneficiario->HistorialMovimiento[25]) ? $this->Beneficiario->HistorialMovimiento[25]->monto : 0;
+
     return $anticipos - $anticipos_reversado;
   }
+
+  /*public function Anticipos(){
+
+    $tMonto = 0;
+    $tMontoFin = 0;
+    $anticipos =0;
+        $iCant = count($this->Beneficiario->HistorialOrdenPagos);
+        if($iCant > 0){
+        foreach ($this->Beneficiario->HistorialOrdenPagos as $k => $v) {
+          if($v->estatus == 100){
+            if($v->fecha<'2018-08-20'){
+                 $tMonto +=round($v->monto/100000,2);
+                 $tMontoFin += $v->monto;
+            }else{$tMonto += $v->monto;
+           }
+          }
+         }
+        }
+    if($this->Beneficiario->fecha_retiro != ''){
+      if($this->Beneficiario->fecha_retiro < '2018-08-20' && $this->Beneficiario->fecha_ultima_modificacion >= '2018-08-20' ){$anticipos = $tMonto;
+      }else if($this->Beneficiario->fecha_retiro < '2018-08-20' && $this->Beneficiario->fecha_ultima_modificacion < '2018-08-20'){$anticipos = $tMontoFin;}
+    }else{$anticipos = $tMonto;}
+    return $anticipos;
+  }*/
+
 
   /**
   * Fecha del Ultimo deposito es tomada de la ultima garantia
@@ -581,8 +642,8 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   */
   public function Saldo_Disponible(){
     $total = ($this->DepositoBanco() - $this->Anticipos()) + $this->Garantias();
-    
-    return $total;  
+
+    return $total;
   }
 
   /**
@@ -594,7 +655,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   public function Saldo_DisponibleFiniquito(){
     /** se agrego el monto de comision de servicio al total en banco  **/
     $total = (($this->DepositoBanco() - $this->Anticipos()) + $this->Garantias() + $this->ComisionServicio()) - ($this->Embargos() + $this->Monto_Recuperar());
-    return $total;  
+    return $total;
   }
 
 
@@ -617,7 +678,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
         $monto = ($this->Beneficiario->asignacion_antiguedad_fin * $this->Beneficiario->MedidaJudicial[1]->porcentaje)/100;
       }
     }
-    
+
     return round($monto, 2);
   }
 
@@ -625,11 +686,11 @@ public function AlicuotaVacaciones($sueldo_global = 0){
     return isset($this->Beneficiario->MedidaJudicialActiva[1])? $this->Beneficiario->MedidaJudicialActiva[1]->monto : 0;
   }
 
-  
+
 
   public function FiniquitoEmbargo(){
     $monto = isset($this->Beneficiario->HistorialMovimiento[27]) ? $this->Beneficiario->HistorialMovimiento[27]->monto : '0';
-  
+
     return $monto;
   }
 
@@ -638,7 +699,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
     $cancelado = 0;
     if( $this->Beneficiario->asignacion_antiguedad > 0)
       $cancelado = ($this->DepositoBanco() + $this->Garantias() + $this->Dias_Adicionales() )/ $this->Beneficiario->asignacion_antiguedad;
-    
+
     return $cancelado * 100;
   }
 
@@ -648,7 +709,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   * @access public
   * @return double
   */
-  public function Asignacion_Depositada(){   
+  public function Asignacion_Depositada(){
     return ($this->DepositoBanco() + $this->Garantias()+$this->ComisionServicio())-$this->MontoRecuperadoActivo();
   }
 
@@ -659,26 +720,47 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   * @access public
   * @return double
   */
-  public function Monto_Recuperar(){   
-    //$resta = $this->AsignacionAntiguedad() - ($this->Asignacion_Depositada() + $this->Dias_Adicionales());
-    $resta = $this->AsignacionFiniquito() - ($this->Asignacion_Depositada() + $this->Dias_Adicionales());
+  public function Monto_Recuperar(){
+    if($this->Beneficiario->fecha_retiro < '2018-08-20'){
+      $resta = $this->AsignacionFiniquitoReconversion() - ($this->DepositoBanco() + $this->Garantias()+ $this->Dias_Adicionales()-$this->MontoRecuperadoActivo());
+    }else{
+      $resta = $this->AsignacionAntiguedad() - ($this->DepositoBanco() + $this->Garantias()+ $this->Dias_Adicionales()-$this->MontoRecuperadoActivo());
+
+    }
     $valor = 0.00;
     if($resta < 0) $valor = $resta * -1;
 
     return $valor;
   }
 
-
-
   /**
-  * Asignacion Depositada para Finiquito
+  * Diferencia Asignacion para Finiquito
+  * con directivas del 20-08-2018 en
+  * adelante
   *
   * @access public
   * @return double
   */
-  public function Asignacion_Diferencia(){   
+  public function Asignacion_Diferencia(){
     //$resta = $this->AsignacionAntiguedad() - $this->Total_Aportados();
     $resta = $this->AsignacionFiniquito() - $this->Total_Aportados();
+    $valor = $resta;
+    //if($resta < 0) $valor = 0.00;
+
+    return $valor;
+  }
+
+  /**
+  * Diferencia Asignacion reconvertida
+  * para Finiquito con directivas anteriores
+  * al 20-08-2018 en adelante
+  *
+  * @access public
+  * @return double
+  */
+ public function Asignacion_Diferencia_rec(){
+    //$resta = $this->AsignacionAntiguedad() - $this->Total_Aportados();
+    $resta = $this->AsignacionFiniquitoReconversion() - $this->Total_Aportados();
     $valor = $resta;
     //if($resta < 0) $valor = 0.00;
 
@@ -692,7 +774,7 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   * @access public
   * @return double
   */
-  public function Fallecimiento_Acto_Servicio(){   
+  public function Fallecimiento_Acto_Servicio(){
     return $this->Beneficiario->sueldo_global * 36;
   }
 
@@ -705,14 +787,14 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   * @access public
   * @return double
   */
-  public function Fallecimiento_Fuera_Servicio(){  
+  public function Fallecimiento_Fuera_Servicio(){
     return $this->Beneficiario->sueldo_global * 24;
   }
 
 
   public function Interes_Capitalizado_Banco(){
     $monto = isset($this->Beneficiario->HistorialMovimiento[10]) ? $this->Beneficiario->HistorialMovimiento[10]->monto : '0';
-  
+
     return $monto;
   }
 

@@ -1,4 +1,4 @@
-<?php  
+<?php
   $usuario = '';
   $monto = 0;
 
@@ -9,11 +9,11 @@
       $monto = $v->monto;
       $porcentaje = $v->porcentaje;//se agrega para mostrar el porcentaje otorgado en el punto de cuenta
       $usuario = $v->usuario_modificacion;
-    }  
+    }
 
     //$anticipo =  $Beneficiario->Calculo['anticipos_aux'] - $monto;
     $anticipo =  $Beneficiario->Calculo['anticipos_aux'];
-    
+
   }
 
   function fecha($fecha = ''){
@@ -60,7 +60,7 @@
         break;
     }
     return $mes;
-    
+
   }
 
 ?>
@@ -79,14 +79,14 @@
     }
 
     td{
-        
+
         text-align: left;
         padding: 8px;
     }
     th {
         border: 1px solid #dddddd;
         text-align: left;
-        background-color: #dddddd; 
+        background-color: #dddddd;
         padding: 8px;
     }
 
@@ -99,7 +99,7 @@
  <center>
  <table style="width: 1000px">
  <tr>
-   <td style="width: 65%;  border: 0px solid #dddddd; text-align: center; font-size: 10px">    
+   <td style="width: 65%;  border: 0px solid #dddddd; text-align: center; font-size: 10px">
      REPÚBLICA BOLIVARIANA DE VENEZUELA<BR>
      MINISTERIO DEL PODER POPULAR PARA LA DEFENSA<BR>
      VICEMINISTERIO DE SERVICIOS, PERSONAL Y LOGISTICA<BR>
@@ -108,8 +108,8 @@
      DE LAS FUERZAS ARMADAS<BR>
    </td>
    <td style="width: 35%;  border: 0px solid #dddddd; text-align: right;">
-     Sistema PACE<br>
-     <?php echo 'Caracas, ' . $f[2] . ' de ' . fecha($f[1]*1) . ' de '. $f[0] ?>
+     Sistema PACE<br><b>
+     <?php echo 'Caracas, ' . $f[2] . ' de ' . fecha($f[1]*1) . ' de '. $f[0] ?></b>
 
    </td>
  </tr>
@@ -118,53 +118,54 @@
  <table style="width: 1000px;  text-align: justify;  font-size: 14px" >
 
   <tr>
-    <td>PARA:</td><td><b>PRESIDENTE DEL IPSFA</b></td>
+    <td>PARA:</td><td><b>PRESIDENTA DEL IPSFA</b></td>
     <td><center><b>
       Nro. 320.600-<?php echo substr(md5($Beneficiario->cedula . $Beneficiario->fecha_ultima_modificacion), 0,6);?>r
       </b></center>
-    </td>  
-  </tr> 
+    </td>
+  </tr>
   <tr>
     <td>DE:</td><td><b>GERENCIA DE BIENESTAR Y SEGURIDAD SOCIAL</b></td>
-    <td><center> 
+    <td><center>
     <button onclick="imprimir()" id="btnPrint">Imprimir Reporte</button>
   </center></td>
-  </tr> 
+  </tr>
 
  </table>
 
  <table style="width: 1000px;" border="1">
-   <tr><td style="width: 550px;">TITULO DEL ASUNTO</td><td>DECISIÓN</td><td>OBSERVACIÓN</td></tr>
+   <tr><td style="width: 550px; height: 100%;text-align: center"><b>ASUNTO</b></td><td style="text-align: center"><b>DECISIÓN</b></td><td style="width: 250px;text-align: center"><b>MARCO LEGAL</b></td></tr>
    <tr>
       <td style="text-align: justify; font-size: 14px; line-height: 1.5" valign="top">
-        &emsp;Esta Gerencia somete a la consideración del ciudadano GD. Presidente de la Junta Administradora del IPSFA,
-        la solicitud formulada por <b><?php 
+        &emsp;Esta Gerencia somete a la consideración de la ciudadana VA. Presidenta de la Junta Administradora del IPSFA,
+        la solicitud formulada por <b><?php
           echo $Beneficiario->Componente->Grado->nombre . ' ' . $Beneficiario->nombres . ' ' . $Beneficiario->apellidos; ?>
          </b> titular de la cédula de identidad <b><?php echo $Beneficiario->cedula . ' (' . $Beneficiario->Componente->nombre . ')';?>
-         </b> de un adelanto de su 
+         </b> de un adelanto de su
          Asignación de Antiguedad, con la finalidad:<b> <?php echo strtoupper($finalidad);?></b><br><br>
-         
-         &emsp;Esta solicitud cumple con lo establecido en el Arículo 59 de la LOSSFANB (LEY NEGRO PRIMERO).<br><br>
-         
-         &emsp;Al profesional le corresponde por concepto de Asignación de Antiguedad (Años de Servicios cumplidos), 
-         la cantidad de Bs. <b><?php echo $Beneficiario->Calculo['asignacion_antiguedad'];?></b> Actualmente se le ha depositado un monto         
-         total de Bs.<b><?php echo $Beneficiario->Calculo['asignacion_depositada'];?></b> lo que representa el 
-         <b><?php echo $Beneficiario->Calculo['porcentaje_cancelado'];?>%</b> de la Asignación de Antiguedad y se han 
+
+         &emsp;Al profesional le corresponde por concepto de Asignación de Antigüedad,
+         la cantidad de Bs. <b><?php echo $Beneficiario->Calculo['asignacion_antiguedad'];?></b> Actualmente se le ha depositado un monto
+         total de Bs.<b><?php echo $Beneficiario->Calculo['asignacion_depositada'];?></b> lo que representa el
+         <b><?php echo $Beneficiario->Calculo['porcentaje_cancelado'];?>%</b> de la Asignación de Antiguedad y se le han
          otorgado adelantos que totalizan la cantidad de Bs. <b><?php echo number_format($anticipo, 2, ',','.');?>.</b>
-         El monto a otorgar es de Bs. <b><?php echo number_format($monto, 2, ',','.');?></b> lo que representa el 
+         El monto a otorgar es de Bs. <b><?php echo number_format($monto, 2, ',','.');?></b> lo que representa el
          <b><?php echo number_format($porcentaje, 0, ',','.');?>%</b> del total depositado en banco.
          <br><br>
-         &emsp;Por lo que me permito realizar esta tramitación con opinión favorable.<br><br>
 
-         <center><b>CNEL. EDUARDO JOSE MARTINEZ SALAS<BR>
+         &emsp;Esta solicitud cumple con lo establecido en el Artículo 59 de la LOSSFANB (LEY NEGRO PRIMERO).<br><br>
+
+         &emsp;Por lo que me permito realizar esta tramitación con opinión favorable.<br><br><br>
+
+         <center><b>CNEL. JUAN MIGUEL QUINTERO MORALES<BR>
          GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL<B><center>
 
-         
+
 
       </td>
-      <td style="width: 325px;text-align: justify; font-size: 14px; line-height: 1.5" valign="top">
-        
-      <table style="height: 100%; width: 100%">
+      <td style="width: 325px; height: 170px; text-align: justify; font-size: 14px; line-height: 1.5" valign="top">
+
+      <table style="width: 100%">
         <tr style="height: 50%; width: 100%">
           <td>APROBADO</td>
           <td><input type="text" style="width:20px"></input></td>
@@ -183,35 +184,44 @@
           <td></td>
           <td></td>
         </tr>
-
-
-        <tr style="height: 50%; width: 100%; text-align: justify; font-size: 14px; line-height: 1.5" valign="bottom">
-          <td colspan="4">
-            <br><br><br><br><br><br>
-            <br><br><br><br><br><br>
-            <b><center>
-            JESÚS RAFAEL SALAZAR VELASQUEZ<BR>
-            GENERAL DE DIVISIÓN<BR>
-            PRESIDENTE DEL I.P.S.F.A<BR>
-            </center>
-            </B>
-          </td>
-        </tr>
       </table>
-        
-        
-
-
-        
+      
+      <br><br><br><br><br><br>
+      <br><br><br><br><br><br>
+      <br><br><br><br>
+      <center><b>ERIKA COROMOTO VIRGÜEZ OVIEDO<BR>
+                VICEALMIRANTE<BR>
+                PRESIDENTA DEL I.P.S.F.A<B><center>
       </td>
 
+
+           <!--tr style="height: 30%; width: 100%; text-align: justify; font-size: 14px; line-height: 1.5" valign="bottom">
+            <td colspan="4">
+              <br><br><br><br><br><br>
+              <br><br><br><br><br><br>
+              <br>
+              <b><center>
+              ERIKA COROMOTO VIRGÜEZ OVIEDO<BR>
+              VICEALMIRANTE<BR>
+              PRESIDENTA DEL I.P.S.F.A
+              </center>
+              </B>
+            </td>
+          </tr-->
+
+          
+
+
+
       <td style="width: 225px;text-align: justify; font-size: 14px; line-height: 1.5" valign="top">
-        Según Resolución N° DG-00044 del 08FEBB99, se delegó la firma Parcial de la Asignación de Antiguedad del personal militar,
-        al General de División Presidente de la Junta Administradora del Instituto de Previsión Social de las Fuerzas Armadas.
+        De conformidad con lo dispuesto en el Artículo 59 de la Ley Negro Primero de fecha <b>29DIC2015</b>, en concordancia con lo
+        establecido en los Artículos 5,6,7 y 8 del Reglamento Parcial de la Ley de Seguridad Social de las Fuerzas Armadas
+        Nacionales Relativo al Pago de la Asignación de Antigüedaqd y Fallecimiento al Personal Militar Profesional de la Fuerza
+        Armada Nacional de fecha <b>27JUN2005</b>.
       </td>
     </tr>
  </table>
-</center><br>
+</center>
 &emsp;&emsp;&emsp;EMG/<?php echo $usuario;?>
 
   <script language="Javascript">

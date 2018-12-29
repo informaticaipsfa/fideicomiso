@@ -248,6 +248,11 @@ class MBeneficiario extends CI_Model{
 	*/
 	var $prima_profesionalizacion = 0.00;
 
+  /**
+	* @var double
+	*/
+	var $prima_compensacion_especial = 0.00;
+
 	/**
 	* @var MPrima
 	*/
@@ -413,7 +418,7 @@ class MBeneficiario extends CI_Model{
 
 			}
 			$this->HistorialSueldo = $this->MHistorialSueldo->listar($id);
-			$this->HistorialMovimiento = $this->MHistorialMovimiento->listar($id);
+			$this->HistorialMovimiento = $this->MHistorialMovimiento->listar($id, $this->fecha_retiro, $this->fecha_ultima_modificacion);
 			$this->MedidaJudicial = $this->MMedidaJudicial->listar($id, $this->fecha_retiro);
 			$this->MedidaJudicialActiva = $this->MMedidaJudicial->listar($id, $this->fecha_retiro, true);
 			$this->HistorialAnticipo = $this->MHistorialAnticipo->listar($id);
@@ -475,14 +480,14 @@ class MBeneficiario extends CI_Model{
 				' . $tbl . '.motivo_paralizacion,
 				status.descripcion AS estatus_descripcion
 			FROM
-				' . $tbl . '				
+				' . $tbl . '
 				JOIN status ON
 					' . $tbl . '.status_id=status.id
 			WHERE
 				beneficiario.cedula=\'' . $cedula . '\'';
 		//echo $sConsulta;
 		$obj = $this->Dbpace->consultar($sConsulta);
-		
+
 		return $obj;
 
 	}
@@ -496,13 +501,13 @@ class MBeneficiario extends CI_Model{
 	* @return Dbpace
 	*/
 	public function listarPorComponente($idComponente = 0){
-		
+
 		$this->load->model('beneficiario/MCalculo');
 		$this->load->model('beneficiario/MDirectiva');
 	    $Directiva = $this->MDirectiva->iniciar();
 	    $this->load->model('beneficiario/MPrima');
-	    
-	    
+
+
 /**
 	    $Prima = $this->MPrima->obtenerSegunDirectiva($Directiva->id);
 	    $Prima->unidad_tributaria = $Directiva->unidad_tributaria;
@@ -551,7 +556,7 @@ class MBeneficiario extends CI_Model{
 				$i++;
 		}
 		}
-		
+
 
 		echo '<pre>';
 		print_r($lst);
@@ -767,14 +772,14 @@ class MBeneficiario extends CI_Model{
 	}
 
 	function ParalizarDesparalizar(){
-		$fecha_r = 'f_retiro=\'' . $this->fecha_retiro . '\', 
+		$fecha_r = 'f_retiro=\'' . $this->fecha_retiro . '\',
 			f_retiro_efectiva=\'' . $this->fecha_retiro . '\',';
 
 		if ($this->fecha_retiro == ''){
 			$fecha_r = 'f_retiro=null, f_retiro_efectiva=null, ';
 		}
-		$sActualizar = 'UPDATE beneficiario SET  
-			motivo_paralizacion=\'' . $this->motivo_paralizacion . '\', 
+		$sActualizar = 'UPDATE beneficiario SET
+			motivo_paralizacion=\'' . $this->motivo_paralizacion . '\',
 			'. $fecha_r.'
 			status_id=\'' . $this->estatus_activo . '\',
 			usr_modificacion=\'' . $_SESSION['usuario'] . '\',

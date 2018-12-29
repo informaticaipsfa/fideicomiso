@@ -355,14 +355,6 @@ function CalcularM(id){
         
 }
 
-
-
-
-
-
-
-
-
 function registrarFamiliar(){
     var t = $('#dbFamiliares').DataTable();
     var cedula = $('#fcedula').val();
@@ -428,17 +420,36 @@ function consultarBeneficiarioFecha(){
 
         $("#directiva").val(data.Componente.Grado.Directiva.nombre);    
         //$("#asignacion_antiguedad").val(data.Calculo.asignacion_antiguedad);
-        $("#asignacion_antiguedad_fin").val(data.Calculo.asignacion_antiguedad_fin); //se cambio con la AA de la rutina AsignacionFiniquito
-        $("#asignacion_antiguedad_fin_aux").val(data.Calculo.asignacion_antiguedad_fin_aux);
-        $("#asignacion_antiguedad_aux").val(data.Calculo.asignacion_antiguedad_aux);
-        
+        /*SE REALIZO ESTE CAMBIO PARA EVALUAR POR fecha_retiro CON EL FIN DE MOSTRAR LA ASIGNACION 
+        RECONVERTIDA PARA ACTIVOS Y FINIQUITOS CON FECHA MAYOR E IGUAL AL 20-08-2018 O CON ASIGNACION 
+        SIN RECONVERTIR PARA FINIQUITOS CON FECHA MENOR 20-08-2018*/
+        if(data.fecha_retiro < '2018-08-20') {
+                $("#asignacion_antiguedad_rec").val(data.Calculo.asignacion_antiguedad_rec);
+                $("#asignacion_antiguedad_aux").val(data.Calculo.asignacion_antiguedad_rec_aux);
+        }else{
+                $("#asignacion_antiguedad_rec").val(data.Calculo.asignacion_antiguedad_fin);
+                $("#asignacion_antiguedad_aux").val(data.Calculo.asignacion_antiguedad_fin_aux);
+        }
+                
         $("#anticipos").val(data.Calculo.anticipos);
         $("#embargos").val(embargos.formatMoney(2, ',', '.'));
         $("#embargos_aux").val(parseFloat(embargos).toFixed(2));
         $("#asignacion_depositada").val(data.Calculo.capital_banco);
         $("#monto_recuperar").val(data.Calculo.monto_recuperar);
-        $("#asignacion_diferencia").val(data.Calculo.asignacion_diferencia);
-        $("#asignacion_diferencia_aux").val(data.Calculo.asignacion_diferencia_aux);
+
+        /*SE REALIZO ESTE CAMBIO PARA EVALUAR POR fecha_retiro CON EL FIN DE MOSTRAR LA DIFERENCIA DE ASIGNACION 
+        RECONVERTIDA PARA ACTIVOS Y FINIQUITOS CON FECHA MAYOR E IGUAL AL 20-08-2018 O CON LA DIFERENCIA DE ASIGNACION 
+        SIN RECONVERTIR PARA FINIQUITOS CON FECHA MENOR 20-08-2018*/
+        if(data.fecha_retiro < '2018-08-20') {
+            $("#asignacion_diferencia").val(data.Calculo.asignacion_diferencia_rec);
+            $("#asignacion_diferencia_aux").val(data.Calculo.asignacion_diferencia_rec_aux);
+        }else{
+            $("#asignacion_diferencia").val(data.Calculo.asignacion_diferencia);
+            $("#asignacion_diferencia_aux").val(data.Calculo.asignacion_diferencia_aux);
+        }
+
+            //$("#asignacion_diferencia_aux").val(data.Calculo.asignacion_diferencia_aux);
+
 
         $("#dias_adicionales").val(data.Calculo.dias_adicionales);
         $("#garantias").val(data.Calculo.garantias);
@@ -552,6 +563,7 @@ function consultarFiniquitos(){
 
     var val = $("#cedulaB").val();
     ruta = sUrlP + "consultarFiniquitos/" + val;  
+    $("#lblfecha_contable").val('');
 
     t.clear().draw();
 
@@ -562,6 +574,7 @@ function consultarFiniquitos(){
         var componente = data.Componente.descripcion;
         var grado = data.Componente.Grado.nombre;
         var tiempo_servicio = data.tiempo_servicio_aux;
+        var fecha_creacion = data.fecha_creacion;
         
         var arr = data.HistorialDetalleMovimiento;
        
@@ -636,10 +649,9 @@ function consultarFiniquitos(){
                     
                     sAcciones += '</ul>';
                 }
+          
 
-                
-
-                
+             
 
 
                 sBoton += sAcciones;
@@ -647,6 +659,7 @@ function consultarFiniquitos(){
                 sBoton += '</div>';
                 $("#lblCedula").text(cedula);
                 $("#lblBeneficiario").text(nombre);
+                $("#lblfecha_contable").text(fecha_contable);
                 t.row.add( [
                     sBoton,
                     fecha_creacion,

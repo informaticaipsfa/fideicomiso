@@ -124,7 +124,7 @@ th {
     <td>DE:</td><td><b>CNEL. GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL</b></td>
   </tr> 
   <tr>
-    <td>PARA:</td><td><b>CNEL. GERENTE DE DE FINANZAS </b></td>    
+    <td>PARA:</td><td><b>CN. GERENTE DE DE FINANZAS </b></td>    
   </tr> 
   <tr>
     <td>ASUNTO:</td><td><b>ASIGNACIÓN <?php 
@@ -200,7 +200,7 @@ th {
      <center>
         Atentamente 
         <br><br><br><br><br><b>
-        CNEL. EDUARDO JOSE MARTINEZ SALAS<BR></b>
+        CNEL. JUAN MIGUEL QUINTERO MORALES<BR></b>
      </center>
      <br>
 

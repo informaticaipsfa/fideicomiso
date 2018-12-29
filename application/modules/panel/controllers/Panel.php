@@ -91,6 +91,7 @@ class Panel extends MY_Controller {
 		$data['FormaPago'] = $this->MFormaPago->listar();
 		$this->load->view("menu/beneficiario/medidajudicial", $data);
 	}
+	
 	public function anticipo(){
 		$this->load->model('beneficiario/MAnticipo');
 		$data['lst'] = $this->MAnticipo->listarTodo();
@@ -166,6 +167,9 @@ class Panel extends MY_Controller {
 		$this->load->view("menu/otros/calculadoraspace");
 	}
 
+	public function pruebatxt(){
+		$this->load->view("menu/pruebatxt");
+	}
 
 
 
@@ -413,6 +417,7 @@ class Panel extends MY_Controller {
 					"\nCantidad de Registros: " . $mnt  .
 					"\nMonto Total de las Garantias: " . $this->KCargador->Resultado['g'] .
 					"\nMonto Total de Dias Adicionales: " . $this->KCargador->Resultado['d'] .
+					"\nMonto Total de Dif. Asignacion: " . $this->KCargador->Resultado['a'] .
 					"\nPeso del Archivo: " . $this->KCargador->Resultado['p'] . " " . $this->KCargador->Resultado['f'] . "\n" .
 					$this->KSensor->Duracion() . "... ",
 			'z' => $firma .".zip",

@@ -156,6 +156,11 @@ class MPrima extends CI_Model{
     $this->Beneficiario->Prima[8] = array(
       //'P_PROFESIONALIZACION' => $this->Beneficiario->profesionalizacion == 1 ? $this->Profesionalizacion() : 0.00
       'P_PROFESIONALIZACION' => $this->Beneficiario->profesionalizacion > 0 ? $this->Profesionalizacion() : 0.00
+      /*if($directiva_id < 64){
+        'P_PROFESIONALIZACION' => $this->Beneficiario->profesionalizacion > 0 ? $this->Profesionalizacion() : 0.00
+       }else
+        'P_PROFESIONALIZACION' => $this->ejecutarfnx($val->fnx, $val->monto_nominal);
+       }*/
       );
     
 
@@ -190,7 +195,7 @@ class MPrima extends CI_Model{
     }
     $this->Beneficiario->Prima[8] = array(
       //'P_PROFESIONALIZACION' => $this->Beneficiario->profesionalizacion == 1 ? $this->Profesionalizacion() : 0.00
-      'P_PROFESIONALIZACION' => $this->Beneficiario->profesionalizacion > 0 ? $this->Profesionalizacion() : 0.00
+       'P_PROFESIONALIZACION' => $this->Beneficiario->profesionalizacion > 0 ? $this->Profesionalizacion() : 0.00
       );
     
   }
@@ -211,8 +216,10 @@ class MPrima extends CI_Model{
          $pprof = $this->Beneficiario->profesionalizacion;
          $sueldo_base = $this->Beneficiario->sueldo_base;
 
+///*** calculo com prima de tabla beneficiario
       if(isset($this->Beneficiario) && ($this->Beneficiario->fecha_retiro == '')){
          $sueldo = (($sueldo_base * $pprof) / 100);
+         //$sueldo = (($sueldo_base * ) / 100);
       }else{ 
         if($this->Beneficiario->fecha_retiro > '2015-12-31'){
           $sueldo = (($sueldo_base * $pprof) / 100);
@@ -222,6 +229,8 @@ class MPrima extends CI_Model{
           }
         }
        }
+///*** fin calculo de la tabla beneficiario
+
        $valor = round($sueldo, 2);
        $this->Beneficiario->prima_profesionalizacion = $valor;
        return $valor; 

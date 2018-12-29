@@ -363,28 +363,8 @@ th {
       </td>
       <td>Anticipos.</td>
       <td><?php
-        /*$anticipo = isset($Beneficiario->Calculo['anticipos_aux']) ? $Beneficiario->Calculo['anticipos_aux'] : 0;
-        echo number_format($anticipo, 2, ',','.');*/
-        /** SE MODIFICO PARA QUE TOTALIZARA EL MONTO DE ANTICIPOS DESDE LA TABLA ORDEN DE PAGO*/
-        $tMonto = 0;
-        $tMontoFin = 0;
-        $iCant = count($Beneficiario->HistorialOrdenPagos);
-        if($iCant > 0){
-        foreach ($Beneficiario->HistorialOrdenPagos as $k => $v) {
-          if($v->estatus == 100){
-            if($v->fecha<'2018-08-20'){ 
-                 $tMonto +=round($v->monto/100000,2);
-                 $tMontoFin += $v->monto;
-
-            }else{$tMonto += $v->monto;
-         }
-        }else if($v->estatus == 103) $tMonto -= round($v->monto/100000,2);
-       }
-      }
-      if($Beneficiario->fecha_retiro != ''){
-        if($Beneficiario->fecha_retiro < '2018-08-20' && $Beneficiario->fecha_ultima_modificacion >= '2018-08-20'){echo number_format($tMonto, 2, ',','.');
-        }else if($Beneficiario->fecha_retiro < '2018-08-20' && $Beneficiario->fecha_ultima_modificacion < '2018-08-20'){ echo number_format($tMontoFin, 2, ',','.');}
-      }else{echo number_format($tMonto, 2, ',','.');}
+        $anticipo = isset($Beneficiario->Calculo['anticipos_aux']) ? $Beneficiario->Calculo['anticipos_aux'] : 0;
+        echo number_format($anticipo, 2, ',','.');
 
       ?></td>
       <td>Fecha U. Anticipo</td>

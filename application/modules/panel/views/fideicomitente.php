@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <?php $this->load->view('inc/cabecera.php');?>
@@ -80,16 +79,17 @@
                      Reporte de Comparación PACE
                         </div>
                         <div class="col-md-12">
-<form action="#" method="post">
+              <form action="#" method="post">
 
               <div class="form-group">
                 <label for="exampleInputFile">Archivo Nuevos Beneficiarios:</label>
                 <input type="file" id="exampleInputFile">
               </div>
 
-            <center></center><button type="button" class="btn btn-primary"><i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Cargar Archivos</button>
-
-                 
+                     
+          <center></center><a href="#!" onclick="cargar()" 
+          class="btn btn-primary" target="_top" id='id'><i class="fa fa-refresh"></i>&nbsp;&nbsp;Cargar Archivos</a> 
+          
           <button type="button" class="btn btn-danger pull-right"><i class="fa fa-file-text"></i>&nbsp;&nbsp;Ver Registro  
           </button>
           </form>
@@ -102,6 +102,7 @@
         <!-- /.content -->
 
         <!-- Main content -->
+
 
       </div><!-- /.content-wrapper -->
 
@@ -116,31 +117,6 @@
     </div><!-- ./wrapper -->
 
     <?php $this->load->view('inc/pie.php');?>
+    <script src="<?php echo base_url()?>application/modules/panel/views/js/carga_fideicomitente.js"></script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

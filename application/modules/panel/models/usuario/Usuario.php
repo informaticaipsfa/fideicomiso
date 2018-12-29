@@ -238,7 +238,7 @@ class Usuario extends CI_Model {
         space.usuario.status_id
       FROM space.usuario 
        
-      WHERE login=\'' . $this -> sobreNombre . '\' AND password =\'' . $this -> _claveEncriptada() . '\';';
+      WHERE login=\'' . $this -> sobreNombre . '\' AND password =\'' . $this -> _claveEncriptada() . '\' AND status_id=292;';
         
     $obj = $this->Dbpace->consultar($consulta);
     return $obj;

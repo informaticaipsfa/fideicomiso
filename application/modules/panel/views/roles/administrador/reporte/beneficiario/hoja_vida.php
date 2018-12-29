@@ -256,7 +256,10 @@ th {
       <td>A. de Antiguedad</td>
       <td><?php 
         if ($Beneficiario->fecha_retiro != ''){
-            echo number_format($Beneficiario->asignacion_antiguedad_fin, 2, ',','.');
+          if ($Beneficiario->fecha_retiro < '2018-08-20'){
+                echo number_format($Beneficiario->asignacion_antiguedad_rec, 2, ',','.');
+           }else{ echo number_format($Beneficiario->asignacion_antiguedad_fin, 2, ',','.');
+          }
         }else{
             echo number_format($Beneficiario->asignacion_antiguedad, 2, ',','.');
         }
@@ -312,12 +315,15 @@ th {
     <tr>
       <td>Diferencia A.A.</td>
       <td><?php 
-              if ($Beneficiario->fecha_retiro != ''){
-                 $diferencia = $Beneficiario->Calculo['asignacion_diferencia'];
+             if ($Beneficiario->fecha_retiro != ''){
+                if ($Beneficiario->fecha_retiro < '2018-08-20'){
+                 $diferencia = $Beneficiario->Calculo['asignacion_diferencia_rec'];
                  echo $diferencia;
               }else{
-                 $diferencia = $Beneficiario->Calculo['diferencia_AA'];
-                 echo $diferencia;  
+                 $diferencia = $Beneficiario->Calculo['asignacion_diferencia'];
+                 echo $diferencia;}
+              }else{$diferencia = $Beneficiario->Calculo['diferencia_AA'];
+                 echo $diferencia;
               }
           ?>
       </td>
@@ -569,7 +575,7 @@ th {
       </b>
     </td>
     <td style="border:0px; width: 50%; text-align: center;"><b>
-      EDUARDO JOSE MARTINEZ SALAS<BR>
+      JUAN GABRIEL PUERTAS TOVAR<BR>
       CNEL.<BR>
       GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL
       </b>

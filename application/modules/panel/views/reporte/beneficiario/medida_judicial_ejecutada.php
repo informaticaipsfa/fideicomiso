@@ -2,6 +2,7 @@
   
   //print_r($Beneficiario->MedidaJudicial);
   $monto =0;
+  $porcentaje =0;
   $n_expediente = 0;
   $n_oficio = 0;
   $fecha = '';
@@ -11,6 +12,7 @@
     foreach ($mj as $key => $v) {
       if($v->ultima_observacion == $codigo){
         $monto = $v->monto;
+        $porcentaje = $v->porcentaje;
         $n_expediente = $v->numero_expediente;
         $n_oficio = $v->numero_oficio;
         $fecha = $v->fecha;
@@ -123,7 +125,7 @@ th {
     <td>DE:</td><td><b>CNEL. GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL</b></td>
   </tr> 
   <tr>
-    <td>PARA:</td><td><b>CNEL. GERENTE DE DE FINANZAS </b></td>    
+    <td>PARA:</td><td><b>CN. GERENTE DE DE FINANZAS </b></td>    
   </tr> 
   <tr>
     <td>ASUNTO:</td><td><b>SOLICITUD DE ELABORACIÓN DE CHEQUE</b></td>
@@ -146,8 +148,17 @@ th {
    
      <!--&emsp;&emsp;Mediante la presente comunicación me dirijo a Ud., en la oportunidad de solicitar de su valiosa colaboración -->
      &emsp;&emsp;Tengo el honor de dirigirme a usted, en la oportunidad se estudie la posibilidad de solicitar de su valiosa colaboración
-     en sentido de elaborar un cheque por la cantidad de Bs. <?php echo number_format($monto, 2, ',','.');?>.
-     <!--en sentido de elaborar un cheque por la cantidad de Bs. <?php /*echo number_format($Beneficiario->Calculo['total_embargos_aux'], 2, ',','.');*/?>.-->
+     <!--en sentido de elaborar un cheque por la cantidad de Bs. <?php /*echo number_format($por, 2, ',','.')*/;?>.-->
+
+     en sentido de elaborar un cheque por la cantidad de Bs. 
+     <?php
+          if($porcentaje != 0){
+            echo number_format($Beneficiario->Calculo['porcentaje'], 2, ',','.');
+                 
+          }elseif ($monto > 0){
+            echo number_format($monto, 2, ',','.');
+           } 
+      ?>
      <br><br>
      <textarea style="width: 100%; height: 60px"></textarea>
      
@@ -160,7 +171,7 @@ th {
      <center><br>
         Atentamente 
         <br><br><b>
-        CNEL. EDUARDO JOSE MARTINEZ SALAS<BR>
+        CNEL. JUAN MIGUEL QUINTERO MORALES<BR>
         </b>
      </center>
 

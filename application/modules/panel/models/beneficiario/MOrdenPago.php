@@ -352,9 +352,9 @@ class MOrdenPago extends CI_Model{
         $Orden->revision = $val->revision;
         $Orden->autoriza = $val->autoriza;
         $Orden->motivo = $val->motivo;
-        $Orden->porcentaje = $val->porcentaje;
         $Orden->estatus = $val->status_id;
         $Orden->movimiento = $val->movimiento_id;
+        $Orden->porcentaje = $val->porcentaje;
         $Orden->monto = $val->monto;
         $Orden->fecha = $val->fecha;
         $Orden->observacion = $val->observacion;
@@ -406,7 +406,8 @@ class MOrdenPago extends CI_Model{
       JOIN grado ON grado.id=beneficiario.grado_id
     where ' . $texto . '
       orden_pago.f_creacion BETWEEN \'' . $desde . ' 00:00:00\' AND  \'' . $hasta . ' 23:59:59\' AND
-      orden_pago.tipoan != 5 AND orden_pago.status_id = 100';
+      orden_pago.tipoan != 5 AND orden_pago.status_id = 100
+      order by cast(orden_pago.cedula_beneficiario as integer)';
 
     //echo $sConsulta;
 

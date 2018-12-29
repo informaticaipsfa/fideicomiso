@@ -106,7 +106,7 @@ th {
     <td>DE:</td><td><b>CNEL. GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL</b></td>
   </tr> 
   <tr>
-    <td>PARA:</td><td><b>CNEL. GERENTE DE DE FINANZAS<BR> A/C SUB. GERENCIA DE TESORERIA</b></td>    
+    <td>PARA:</td><td><b>CN. GERENTE DE DE FINANZAS<BR> A/C SUB. GERENCIA DE TESORERIA</b></td>    
   </tr> 
   <tr>
     <td>ASUNTO:</td><td><b>REMISION DE SOLICITUDES DE ADELANTOS.</b></td>
@@ -141,7 +141,7 @@ th {
 
         <br><br><b>
 
-        CNEL. EDUARDO JOSE MARTINEZ SALAS<BR>
+        CNEL. JUAN MIGUEL QUINTERO MORALES<BR>
         GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL<BR></b>
      </center>
      <br>

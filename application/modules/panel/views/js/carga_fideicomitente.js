@@ -1,7 +1,4 @@
-
-
 var Persona = {};
-
 
 
 $( "#id" ).keypress(function( event ) {
@@ -20,10 +17,10 @@ $('#fuascenso').datepicker({
   autoclose: true
 });
 
-
 function consultar() {
     limpiar();
-    var val = $("#id").val();
+    //id = '7131627';
+    var val = $("7131627").val();
     ruta = sUrlP + "consultarBeneficiario/" + val;
     $.getJSON(ruta, function(data) {
         $("#nombres").val(data.nombres);
@@ -79,7 +76,6 @@ function cargarFechaSlash(fecha){
     }
 }
 
-
 function cargarSexo(sex){
     if (sex == '' || sex == null){
         var opt = new Option('SELECCIONE', '');
@@ -125,9 +121,6 @@ function cargarGrado(cod, nom, id){
        limpiar();
     });
 }
-
-
-
 
 
 function limpiar(){
@@ -190,43 +183,18 @@ function cargarBeneficiario(){
    
 }
 
-function actualizar(){
-    var boton = '<button type="button" class="btn btn-success pull-right" onclick="continuar()">';
-        boton += '<i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Continuar</button>';
-    $("#divContinuar").html(boton);
+function cargar(){
+      
+ $.ajax({    
+        url: sUrlP + "fideicomitente",
+        type: "POST",
+        data: {'data' : 'hola'},
+        success: function(data){
+          alert(data);
+      }
+  });
 
-    /* se agrego la validacion de fecha retiro para que no se pueda actualizar datos al beneficiario finiquitado*/
-    if($("#id").val() == '' || $("#fecha_retiro").val() != '' ){ 
-        $("#txtMensaje").html('Debe ingresar una cédula de identidad o Beneficiario se encuentra retirado');
-        $("#logMensaje").modal('show');
-        $("#id").val('');
-        limpiar();
-    }else{
-        cargarBeneficiario();
-        console.log(Persona);
-        $.ajax({
-              url: sUrlP + "actualizarBeneficiario",
-              type: "POST",
-              data: {'data' : JSON.stringify({
-                Persona: Persona
-              })},
-              success: function (data) {
-                $("#txtMensaje").html(data);
-                $("#logMensaje").modal('show');
-                $("#id").val('');
-
-              },
-              error: function(data){
-                $("#txtMensaje").html(data);
-                $("#logMensaje").modal('show');
-
-              }
-            });
-        limpiar();
-    }
-}
-
-
+} 
 
 function continuar(){
     $("#logMensaje").modal('hide');
