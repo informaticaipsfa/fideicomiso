@@ -238,7 +238,7 @@ class Usuario extends CI_Model {
         space.usuario.status_id
       FROM space.usuario 
        
-      WHERE login=\'' . $this -> sobreNombre . '\' AND password =\'' . $this -> _claveEncriptada() . '\' AND status_id=292;';
+      WHERE login=\'' . $this -> sobreNombre . '\' AND password =\'' . $this -> _claveEncriptada() . '\' AND status_id = 292;';
         
     $obj = $this->Dbpace->consultar($consulta);
     return $obj;
@@ -273,7 +273,7 @@ class Usuario extends CI_Model {
   }
 
   function listar(){   
-    $sConsulta = "SELECT id, login, nombre, apellido, status_id FROM space.usuario WHERE status_id=292 ORDER BY id";
+    $sConsulta = "SELECT id, login, nombre, apellido, status_id FROM space.usuario WHERE status_id IN (292, 293) ORDER BY id";
     $obj = $this->Dbpace->consultar($sConsulta);
     return $obj->rs;
   }
@@ -287,6 +287,11 @@ class Usuario extends CI_Model {
       $donde = ' id=  ' . $r->id;
     }
 
+    $clave = '';
+    if($r->cla != "" ){
+      $clave = 'password=md5(\'' . $r->cla . '\'),';
+    }
+
     $upsert = 'WITH UPSERT AS (
       UPDATE space.usuario 
       SET 
@@ -295,7 +300,7 @@ class Usuario extends CI_Model {
         apellido=\'\',
         pregunta_secreta=\'' . $r->tel . '\',
         status_id=' . $r->est . ',
-        password=md5(\'' . $r->cla . '\'),
+        ' . $clave . '
         f_ult_modificacion=now(),
         observ_ult_modificacion=\'' . $r->obs . '\'
       WHERE ' . $donde . ' 

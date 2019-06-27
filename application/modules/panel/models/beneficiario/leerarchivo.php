@@ -1,8 +1,10 @@
-<?php	
-	conexion();
-	cargar_data();
-	reporte();
-	$result = $array();
+<?php
+	function cargar(){	
+		conexion();
+		cargar_data();
+		reporte();
+		$result = $array();
+	}
 
 
 	function conexion(){

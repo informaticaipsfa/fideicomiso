@@ -143,7 +143,7 @@ function removerMenu(){
 	var texto = $("#cmbMenu option:selected").text();
 	var boton = '<button type="button" class="btn btn-danger pull-right" onclick="continuar()">';
             boton += '<i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;No</button>';
-            boton += '<button type="button" class="btn btn-success" onclick="desactivar(' + uid +  ',' + id +  ')">';
+            boton += '<button type="button" class="btn btn-success" onclick="desactivar(\'' + uid +  '\',\'' + id +  '\')">';
             boton += '<i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Si</button>';
     var msj = '¿Está seguro que desea desactivar ' + texto + '?';
     $("#divContinuar").html(boton);
@@ -151,8 +151,9 @@ function removerMenu(){
     $("#logMensaje").modal('show');
 }
 
-function desactivar(uid, idm){
-	alert(uid + ' ->  ' + idm);
+function desactivar(x, y){
+	//alert(uid + ' ->  ' + idm);
+	console.info('Console... ', x, y);
 }
 
 function agregarMenu(){
@@ -281,7 +282,7 @@ function UpsertUsuario(){
 	var rcl = $("#rclave").val();
 	var obs = $("#observacion").val();
 
-	if(nom == "" || seu == "" || cor == "" || cla == "" || rcl == ""){		
+	if(nom == "" || seu == "" || cor == "" ){		
 		msjErr ('Los datos para crear el usuario deben estar completos verifique e intente de nuevo');
 	}else{
 		if(cla != rcl) {
@@ -325,7 +326,7 @@ function salvarDatos(){
 	 	cor : $("#correo").val(),
 	 	cla : $("#clave").val(),
 	 	rcl : $("#rclave").val(),
-	 	est : $("#estatus").val(),
+	 	est : parseInt($("#estatus").val()),
 	 	obs : $("#observacion").val()
 	 });
 

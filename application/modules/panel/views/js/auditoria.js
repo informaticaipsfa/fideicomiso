@@ -22,7 +22,7 @@ function Consultar(){
     var t = $('#reporteAuditoria').DataTable();
 
     var val = $("#id").val();
-    ruta = sUrlP + "consultarBeneficiario/" + val;  
+    ruta = sUrlP + "consultarBeneficiario/" + val;
 
     t.clear().draw();
 
@@ -56,7 +56,7 @@ function Consultar(){
     });
 }
 
-function ConsultarHistorialBeneficiario(){
+function ConsultarHistorialBeneficiario()                      {
     var t = $('#reporteAuditoriaDetalle').DataTable();
 
     var val = $("#id").val();

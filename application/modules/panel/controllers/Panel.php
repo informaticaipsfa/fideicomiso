@@ -34,7 +34,7 @@ class Panel extends MY_Controller {
 	
 
 	public function fideicomitente(){
-		$this->load->view("fideicomitente");
+		$this->load->view("menu/beneficiario/fideicomitente");
 	}
 
 	public function beneficiario(){
@@ -133,6 +133,13 @@ class Panel extends MY_Controller {
 		$this->load->model("kernel/KCargador");
 		$data['Archivos'] = $this->KCargador->ConsultarArchivos();
 		$this->load->view("menu/calculos/pagoaportes", $data);
+	}
+
+	public function resumenaporte($llave,$tipo,$fecha){
+		$this->load->model("kernel/KCargador");
+		$data = $this->KCargador->listarResumen($llave,$tipo,$fecha);
+		echo $data;
+
 	}
 
 
@@ -543,12 +550,13 @@ class Panel extends MY_Controller {
 		$this->load->model('beneficiario/MHistorialMovimiento');
 		$this->load->model('beneficiario/MOrdenPago');
 
-		$this->MBeneficiario->obtenerID($cedula, $fecha);
-		$this->MBeneficiario->HistorialOrdenPagos = $this->MOrdenPago->listarPorCedula($cedula);
-		$this->MBeneficiario->HistorialDetalleMovimiento = $this->MHistorialMovimiento->listarDetalle($cedula);
+		$this->MBeneficiario->obtenerID($id, $fecha);
+		$this->MBeneficiario->HistorialOrdenPagos = $this->MOrdenPago->listarPorCedula($id);
+		$this->MBeneficiario->HistorialDetalleMovimiento = $this->MHistorialMovimiento->listarDetalle($id);
 
 		$lst = $this->MBeneficiario->consultarHistorial($id);
 		echo json_encode($lst);
+		
 	}
 
 	public function consultarBeneficiarios($cedula = '', $fecha = ''){

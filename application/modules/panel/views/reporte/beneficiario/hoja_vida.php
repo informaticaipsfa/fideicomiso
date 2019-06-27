@@ -383,8 +383,9 @@ th {
       }
       if($Beneficiario->fecha_retiro != ''){
         if($Beneficiario->fecha_retiro < '2018-08-20' && $Beneficiario->fecha_ultima_modificacion >= '2018-08-20'){echo number_format($tMonto, 2, ',','.');
-        }else if($Beneficiario->fecha_retiro < '2018-08-20' && $Beneficiario->fecha_ultima_modificacion < '2018-08-20'){ echo number_format($tMontoFin, 2, ',','.');}
-      }else{echo number_format($tMonto, 2, ',','.');}
+        }else if($Beneficiario->fecha_retiro < '2018-08-20' && $Beneficiario->fecha_ultima_modificacion < '2018-08-20'){echo number_format($tMontoFin, 2, ',','.');
+        }else if($Beneficiario->fecha_retiro >= '2018-08-20' && $Beneficiario->fecha_ultima_modificacion >= '2018-08-20'){echo number_format($tMonto, 2, ',','.');}
+      }else {echo number_format($tMonto, 2, ',','.');}
 
       ?></td>
       <td>Fecha U. Anticipo</td>

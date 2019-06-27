@@ -29,7 +29,7 @@ class pruebatxt extends CI_Model{
       	
     public function leerArchivo(){
    	 	
-   	 	$fp = fopen("/home/mary/www/space/tmp/Fideicomitentes_2017.txt", "r");
+   	 	$fp = fopen("/home/mary/www/space/tmp/FIDEICOMITENTES.txt", "r");
     	while(!feof($fp)) {
 			//$linea = fgets($fp);
 			fscanf($fp,"%1d %2d %8ld %15s %15s %15s %15s %4d %2d %2d %2d %2d %2d %8d %8d %2s",$sql_codigo,$sql_status_prof,$sql_cedula,$sql_apellidos,$sql_nombres,$sql_apellidos2,$sql_nombres2,$sql_grado,$sql_num_hijo,$sql_porc_no_asc,$sql_an_rec_ser,$sql_mes_recon_ser,$sql_dia_recon_ser,$sql_fecha_ingreso,$sql_fec_ult_ascenso,$sql_categoria);

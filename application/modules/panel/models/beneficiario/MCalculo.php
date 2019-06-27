@@ -723,8 +723,8 @@ public function AlicuotaVacaciones($sueldo_global = 0){
   public function Monto_Recuperar(){
     if($this->Beneficiario->fecha_retiro < '2018-08-20'){
       $resta = $this->AsignacionFiniquitoReconversion() - ($this->DepositoBanco() + $this->Garantias()+ $this->Dias_Adicionales()-$this->MontoRecuperadoActivo());
-    }else{
-      $resta = $this->AsignacionAntiguedad() - ($this->DepositoBanco() + $this->Garantias()+ $this->Dias_Adicionales()-$this->MontoRecuperadoActivo());
+    }else if($this->Beneficiario->fecha_retiro >= '2018-08-20'){
+      $resta = $this->AsignacionFiniquito() - ($this->DepositoBanco() + $this->Garantias()+ $this->Dias_Adicionales()-$this->MontoRecuperadoActivo());
 
     }
     $valor = 0.00;

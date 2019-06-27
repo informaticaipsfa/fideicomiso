@@ -85,6 +85,7 @@ class KCalculoLote extends CI_Model{
     $tiempo_servicio = $this->Beneficiario->tiempo_servicio;
     $unidad_tributaria =  $this->Directiva['ut'];
     $sueldo_base = $this->Beneficiario->sueldo_base;
+    $sueldo_minimo = $this->Directiva['salario'];
     $no_ascenso = $this->Beneficiario->no_ascenso;
     $numero_hijos = $this->Beneficiario->numero_hijos;
 
@@ -545,6 +546,9 @@ function GenerarAlicuotaVacaciones(){
 
   public function GenerarNoDepositadoBanco(){
     $this->Beneficiario->no_depositado_banco = $this->Beneficiario->asignacion_antiguedad - $this->Beneficiario->deposito_banco - $this->Beneficiario->garantias_acumuladas  - $this->Beneficiario->dias_adicionales_acumulados;
+    
+    if($this->Beneficiario->no_depositado_banco < 0) $this->Beneficiario->no_depositado_banco = 0.00;
+
   }
 
 

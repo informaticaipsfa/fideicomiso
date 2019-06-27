@@ -85,7 +85,11 @@
                              <?php
 
                                 foreach ($usuarios as $k => $v) {
-                                  echo '<option value="' . $v->id . '">'. $v->login . '</option>';
+                                  $marca = "";
+                                  if( $v->status_id == 293) { 
+                                    $marca = " ( X ) ";
+                                  }
+                                  echo '<option value="' . $v->id . '">'. $v->login . $marca . '</option>';
                                 };
                               ?>
                             </select>

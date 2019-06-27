@@ -71,9 +71,9 @@
                     </button>
                   </div>
                   <div class="col-xs-6">
-                    <button type="button" class="btn btn-primary" style="margin-right: 5px;">
+                     <!--<button type="button" class="btn btn-primary" style="margin-right: 5px;">
                       <i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir
-                    </button>
+                    </button>-->
                   </div>
                 </div>
               </div>

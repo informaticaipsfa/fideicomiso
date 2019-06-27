@@ -17,20 +17,20 @@ $('#fuascenso').datepicker({
   autoclose: true
 });
 
-function consultar() {
+function consultar(){
     limpiar();
     //id = '7131627';
-    var val = $("7131627").val();
-    ruta = sUrlP + "consultarBeneficiario/" + val;
+    var val = "13587538";
+    ruta = sUrlP + "Panel/consultarBeneficiarios/" + val;
     $.getJSON(ruta, function(data) {
         $("#nombres").val(data.nombres);
         $("#apellidos").val(data.apellidos);
-        cargarSexo(data.sexo);
+        //cargarSexo(data.sexo);
 
 
 
         $("#componente").val(data.Componente.nombre);
-        cargarGrado(data.Componente.Grado.id, data.Componente.Grado.nombre, data.Componente.id);
+        //cargarGrado(data.Componente.Grado.id, data.Componente.Grado.nombre, data.Componente.id);
 
         $('#fingreso').val(cargarFecha(data.fecha_ingreso));
         $("#tservicio").val(data.tiempo_servicio);
@@ -54,7 +54,8 @@ function consultar() {
         $("#saldo_disponible").val(data.Calculo.saldo_disponible);
         vBtn();
 
-    }).done(function(msg) {}).fail(function(jqXHR, textStatus) {
+    }
+    ).done(function(msg) {}).fail(function(jqXHR, textStatus) {
         $("#txtMensaje").html('No se encontro cédula de beneficiario');
         $("#logMensaje").modal('show');
         limpiar();
@@ -184,16 +185,37 @@ function cargarBeneficiario(){
 }
 
 function cargar(){
-      
- $.ajax({    
+   
+  /*$.ajax({    
         url: sUrlP + "fideicomitente",
         type: "POST",
         data: {'data' : 'hola'},
         success: function(data){
           alert(data);
       }
-  });
+  });*/ 
+        consultar();
+        cargarBeneficiario();
+        console.log(Persona);
+        $.ajax({
+              url: sUrlP + "actualizarBeneficiario" + val,
+              type: "POST",
+              data: {'data' : JSON.stringify({
+                Persona: Persona
+              })},
+              success: function (data) {
+                $("#txtMensaje").html(data);
+                $("#logMensaje").modal('show');
+                $("#id").val('');
 
+              },
+              error: function(data){
+                $("#txtMensaje").html(data);
+                $("#logMensaje").modal('show');
+
+              }
+            });
+        limpiar();
 } 
 
 function continuar(){

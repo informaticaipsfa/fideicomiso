@@ -484,7 +484,8 @@ class MBeneficiario extends CI_Model{
 				JOIN status ON
 					' . $tbl . '.status_id=status.id
 			WHERE
-				beneficiario.cedula=\'' . $cedula . '\'';
+				' . $tbl . '.cedula=\'' . $cedula . '\' 
+			ORDER BY ' . $tbl . '.f_ult_modificacion';
 		//echo $sConsulta;
 		$obj = $this->Dbpace->consultar($sConsulta);
 
@@ -950,6 +951,9 @@ class MBeneficiario extends CI_Model{
 			$Beneficiario->motivo_paralizacion = $val->motivo_paralizacion;
 			$Beneficiario->fecha_reincorporacion = $val->f_reincorporacion;
 			$Beneficiario->observacion = $val->observ_ult_modificacion;
+
+			$Beneficiario->Componente->ObtenerConGrado($val->componente_id, $val->grado_id, $val->st_no_ascenso);
+			
 			$lst[] = $Beneficiario;
 			$i++;
 		}

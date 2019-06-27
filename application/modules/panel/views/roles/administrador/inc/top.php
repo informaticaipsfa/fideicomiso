@@ -135,7 +135,7 @@
                       <a href="#" class="btn btn-default btn-flat">Perfil</a>
                     </div>
                     <div class="pull-right">
-                      <a href="<?php echo base_url()?>/index.php/panel/salir" class="btn btn-default btn-flat">Salir</a>
+                      <a href="<?php echo base_url()?>index.php/panel/salir" class="btn btn-default btn-flat">Salir</a>
                     </div>
                   </li>
                 </ul>

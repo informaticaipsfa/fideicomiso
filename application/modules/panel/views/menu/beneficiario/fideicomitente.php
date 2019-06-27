@@ -80,7 +80,7 @@
                         </div>
                         <div class="col-md-12">
               <form action="#" method="post">
-
+ 
               <div class="form-group">
                 <label for="exampleInputFile">Archivo Nuevos Beneficiarios:</label>
                 <input type="file" id="exampleInputFile">
@@ -88,8 +88,9 @@
 
                      
           <center></center><a href="#!" onclick="cargar()" 
-          class="btn btn-primary" target="_top" id='id'><i class="fa fa-refresh"></i>&nbsp;&nbsp;Cargar Archivos</a> 
-          
+          class="btn btn-primary" target="_top" id='btnActualizar'><i class="fa fa-refresh"></i>&nbsp;&nbsp;Cargar Archivos</a> 
+
+                
           <button type="button" class="btn btn-danger pull-right"><i class="fa fa-file-text"></i>&nbsp;&nbsp;Ver Registro  
           </button>
           </form>
@@ -118,5 +119,5 @@
 
     <?php $this->load->view('inc/pie.php');?>
     <script src="<?php echo base_url()?>application/modules/panel/views/js/carga_fideicomitente.js"></script>
-  </body>
+    </body>
 </html>

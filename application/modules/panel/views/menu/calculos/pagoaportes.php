@@ -46,20 +46,19 @@
                     <table id="reportearchivos" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th style="width:200px;">Archivos Bancarios</th>
+                            <th style="width:350px;">Archivos Bancarios</th>
                             <th >Llave del Archivo</th>                            
                             <th style="width: 50px;">Registros</th>   
-                            <th>Descripcion</th>                         
-                            <th>Fecha</th>                            
+                            <th>Descripcion</th>                       
                             <th>Peso</th>
-                            <th>Usuario</th>
                         </tr>
                         </thead>
                         <tbody>
                           <?php
-                            foreach ($Archivos as $k => $v) {
-                              $url = '/system/space/tmp/' . tipoMovimiento($v['tipo']) .  $v['id'] . '/APERT' . $v['sub'] . '.txt';
-                              $urlApert = '/system/space/tmp/' . tipoMovimiento($v['tipo']) .  $v['id'] . '/APORT' . $v['sub'] . '.txt';
+                          foreach ($Archivos as $k => $v) {
+                          $url = '/space/tmp/' . tipoMovimiento($v['tipo']) .  $v['id'] . '/APERT' . $v['sub'] . '.txt';
+                          $urlApert = '/space/tmp/' . tipoMovimiento($v['tipo']) .  $v['id'] . '/APORT' . $v['sub'] . '.txt';
+                              $urlResumen = 'resumenaporte/' . substr($v['id'], -8) . '/' . $v['tipo'] . '/' . $v['fecha'];
                               echo '<tr>
                                       <td>
                                         <a href="' .  $url . '" target="top" class="btn btn-app">
@@ -70,13 +69,14 @@
                                           <span class="badge bg-green">' . $v['aporte'] . '</span>
                                           <i class="fa fa-barcode"></i> Aporte 
                                         </a>
+                                        <a href="' .  $urlResumen . '" target="top" class="btn btn-app">
+                                          <i class="fa fa-print"></i> Resumen 
+                                        </a>
                                       </td>
-                                      <td>' . $v['id'] . '</td>
+                                      <td>' . $v['id'] . '<br>' . $v['fecha'] .'<br>' . $v['usuario'] . '</td>
                                       <td>' . $v['registro']. '</td>
                                       <td>' . $v['tipotexto'] . '</td>
-                                      <td>' . $v['fecha']. '</td>
                                       <td>' . $v['peso'] . '</td>
-                                      <td>' . $v['usuario'] . '</td>
                                     </tr>';
                             }
 

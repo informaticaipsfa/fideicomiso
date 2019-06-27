@@ -12,22 +12,22 @@ var _DATA = {};
 
 
 function PrepararIndices(){
-	
+
 	var fde = "";
 	var fha = "";
     var val = $("#directiva").val();
 	verdad = true;
-		
+
 	fe = $("#datepicker").val(); //
-	
+
 
     f = $("#datepicker1").val();
     fx = $("#datepicker2").val();
     if (f != ""){
-    	verdad = false;    	
+    	verdad = false;
         f = f.split('/');
-        fde = f[2] + '-' + f[1] + '-' + f[0];        
-        if(fde != ""){        
+        fde = f[2] + '-' + f[1] + '-' + f[0];
+        if(fde != ""){
             fx = fx.split('/');
             if(fx != ""){
                 fha = fx[2] + '-' + fx[1] + '-' + fx[0];
@@ -36,13 +36,13 @@ function PrepararIndices(){
 				$("#logMensaje").modal('show');
 				return false;
             }
-        }else{ //En caso de que no exista fecha desde 
+        }else{ //En caso de que no exista fecha desde
         	if ($('#datepicker1').val() == ""){
 				$("#txtMensaje").html('Debe seleccionar una fecha');
 				$("#logMensaje").modal('show');
 				return false;
 			}
-	
+
         }
     }
 
@@ -51,8 +51,8 @@ function PrepararIndices(){
 		$("#logMensaje").modal('show');
 		return false;
 	}
-	
-	
+
+
 	if (fe == ""){
 		$("#txtMensaje").html('Debe seleccionar una fecha');
 		$("#logMensaje").modal('show');
@@ -65,7 +65,7 @@ function PrepararIndices(){
 
 
 	_DATA = {
-		id : val, 
+		id : val,
 		fe : fe,
 		sit: $("#situacion option:selected").val(),
 		com: $('#componente option:selected').val(),
@@ -75,7 +75,7 @@ function PrepararIndices(){
 	};
 	boton = CrearBotones();
 	$("#divContinuar").html(boton);
-    $("#txtMensaje").html('Si ya antes ha generado los indices recientemente no se requiere de generarlos nuevamente. Esta seguro que desea generar los indices, recuerde este proceso puede tardar varios segundos. Por favor espere'); 
+    $("#txtMensaje").html('Si ya antes ha generado los indices recientemente no se requiere de generarlos nuevamente. Esta seguro que desea generar los indices, recuerde este proceso puede tardar varios segundos. Por favor espere');
     $("#logMensaje").modal('show');
 }
 
@@ -85,6 +85,7 @@ function ProcesarIndices(id){
 	$('#cargando').show();
 	sit = $("#situacion option:selected").val();
 	$.get(sUrlP + "PrepararIndices/" + id+ "/" + sit).done(function (data){
+		console.log(data);
 		$('#obse').val(data.m);
 		$('#detalle').show();
 		$('#cargando').hide();
@@ -126,10 +127,10 @@ function GenerarAporte(){
 	var t = $('#reportearchivos').DataTable();
     t.clear().draw();
 	$('#cargando').show();
-	
+
 	url = sUrlP + "GenerarCalculoAporteCapital/";
 	$.post(url, {data: JSON.stringify(_DATA)}, function (data){
-		
+
 
 
 		//console.log(data);
@@ -137,22 +138,22 @@ function GenerarAporte(){
 		$('#generar').hide();
 		$('#descargar').show();
 		$('#sueldos').show();
-		
+
 
 
 
 
 		_ZIP = data.z;
-		
+
 		j = data.json;
-		
+
 		var sBoton = '<div class="btn-group">';
-        sBoton += '<button id="btnProcesar" type="button" class="btn btn-success pull-right" title="Generar" onclick="Ctxt(\'' + j.c + '\')"><i class="fa fa-database" ></i></button>';                                
+        sBoton += '<button id="btnProcesar" type="button" class="btn btn-success pull-right" title="Generar" onclick="Ctxt(\'' + j.c + '\')"><i class="fa fa-database" ></i></button>';
         sBoton += '</button>';
-	    sBoton + '</div>';  
+	    sBoton + '</div>';
 
 
-		
+
 		t.row.add([
 				sBoton,
 				j.p + ' ' + j.f.substring(0,10) + '...',
@@ -163,12 +164,12 @@ function GenerarAporte(){
 				j.a + 'Bs.'
 			]
 		).draw(false);
-		
+
 		$('#cargando').hide();
 	}).fail(function (err){
 		console.log(err);
 	});
-		
+
 
 }
 
@@ -178,14 +179,14 @@ function DescargarAportes(){
 
 function DescargarTxt(file, tipo){
 	location.href = sUrl + 'tmp/' + file + '/' + file + '.zip';
-	
+
 	var boton = '<button type="button" class="btn btn-warning pull-right" onclick="RegistarTxt(\'' + file + '\',' + tipo + ')">';
         boton += '<i class="fa fa-superscript"></i>&nbsp;&nbsp;Ejecutar&nbsp;&nbsp;</button>';
         boton += '<button type="button" class="btn btn-danger" onclick="continuar()">';
         boton += '<i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;Cancelar&nbsp;&nbsp;</button>';
     $("#divContinuar").html(boton);
-    texto = '¿Desea ejecutar los calculos y registrarlos en la base de datos para luego depositarlos?'; 
-    $("#txtMensaje").html(texto); 
+    texto = '¿Desea ejecutar los calculos y registrarlos en la base de datos para luego depositarlos?';
+    $("#txtMensaje").html(texto);
     $("#logMensaje").modal('show');
 }
 
@@ -198,10 +199,10 @@ function cargarGrado(){
     $("#grado").html('');
     $("#grado").append('<option value=99>Todos los grados</option>');
 
-    id = $("#componente option:selected").val();    
+    id = $("#componente option:selected").val();
     ruta = sUrlP + "cargarGradoComponente/" + id;
 
-    $.getJSON(ruta, function(data) {    
+    $.getJSON(ruta, function(data) {
         $.each(data, function(d, v){
             var opt = new Option(v.nombre, v.codigo);
             $("#grado").append(opt);
@@ -220,8 +221,8 @@ function ventana(id, tipo){
     var boton = '<button type="button" class="btn btn-success" onclick="DescargarTxt(\'' + id + '\',' + tipo + ')">';
         boton += '<i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Continuar&nbsp;&nbsp;</button>';
     $("#divContinuar").html(boton);
-    texto = 'Descargar Archivo de Aporte'; 
-    $("#txtMensaje").html(texto); 
+    texto = 'Descargar Archivo de Aporte';
+    $("#txtMensaje").html(texto);
     $("#logMensaje").modal('show');
 }
 
@@ -239,11 +240,11 @@ function CGTxt(id){
 	if(m != "-"){
 		var dato = {
 			tipo: m,
-			porc: $("#porc").val()
+			porc: parseFloat($("#porc").val())
 		}
 		url = sUrlP + "LoteGarantiaDiasAdicionales/" + id;
 		$.post(url, {data: JSON.stringify(dato)}, function (data){
-			console.log(data);		
+			console.log(data);
 			ventana(data.a, m);
 		}).fail(function (err){
 			console.log(err);
@@ -255,7 +256,7 @@ function CGTxt(id){
 
 function RegistarTxt(id, tipo){
 
-	$("#divContinuar").html(''); 
+	$("#divContinuar").html('');
     $("#txtMensaje").html('Por favor espere mientras procesamos los archivos...');
 
 	var dato = {
@@ -263,7 +264,7 @@ function RegistarTxt(id, tipo){
 		tipo: tipo
 	}
 	console.log(tipo);
-	
+
 	url = sUrlP + "CrearTxtMovimientos/" + id;
 	$.post(url, {data: JSON.stringify(dato)}, function (data){
 		console.log(data);
@@ -272,10 +273,10 @@ function RegistarTxt(id, tipo){
 		var boton = '<button type="button" class="btn btn-success pull-right" onclick="continuar()">';
         boton += '<i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Continuar&nbsp;&nbsp;</button>';
 	    $("#divContinuar").html(boton);
-	    texto = '<a href="' + urlf + '" target="top" class="btn btn-app"><span class="badge bg-green">' + data.caper + '</span><i class="fa fa-edit"></i> Apertura </a>'; 
-	    texto += '<a href="' + urlt + '"  target="top" class="btn btn-app"><span class="badge bg-green">' + data.capro + '</span><i class="fa fa-barcode"></i> Aporte </a>'; 
+	    texto = '<a href="' + urlf + '" target="top" class="btn btn-app"><span class="badge bg-green">' + data.caper + '</span><i class="fa fa-edit"></i> Apertura </a>';
+	    texto += '<a href="' + urlt + '"  target="top" class="btn btn-app"><span class="badge bg-green">' + data.capro + '</span><i class="fa fa-barcode"></i> Aporte </a>';
 	    $("#txtMensaje").html(texto);
-	    	
+
 	}).fail(function (err){
 		console.log(err);
 	});
@@ -284,5 +285,5 @@ function RegistarTxt(id, tipo){
 }
 
 function GenerarSueldos(){
-	
+
 }

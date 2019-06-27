@@ -81,7 +81,7 @@ class KDirectiva extends CI_Model{
           udad_tributaria, detalle_directiva.grado_id, 
                 detalle_directiva.anio, detalle_directiva.sueldo_base,
                 grado.nombre AS gnombre,componente.id AS compid,
-                componente.descripcion AS cnombre
+                componente.descripcion AS cnombre, A.salario_minimo as salario
         FROM (SELECT * FROM directiva_sueldo 
           WHERE ' . $donde . ' ORDER BY f_inicio desc LIMIT 1) 
               AS A  
@@ -107,6 +107,7 @@ class KDirectiva extends CI_Model{
       $list = array(
         'oid'=>$obj->rs[0]->id,
         'ut' => $obj->rs[0]->udad_tributaria,
+        'salario' => $obj->rs[0]->salario,
         'fnx' => array(),
         'com' => array()
         ); 

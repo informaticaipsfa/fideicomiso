@@ -141,7 +141,7 @@ class Login extends MY_Controller {
 
   	public function salir(){
   		session_destroy();
-  		$this->load->view ( 'login');
+  		$this->load->view('login');
   	}
 
 
