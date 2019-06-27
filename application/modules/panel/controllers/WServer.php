@@ -18,6 +18,7 @@ use Restserver\Libraries\REST_Controller;
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
 
+ date_default_timezone_set ( 'America/Caracas' );
 class WServer extends REST_Controller{
 	
 	public function __construct(){

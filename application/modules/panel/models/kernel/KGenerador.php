@@ -146,7 +146,6 @@ class KGenerador extends CI_Model{
     if($tipo == 1)$m = 37;
     if($tipo == 2)$m = 35;
 
-   
     $sub = substr($path, 1, 33);
     $this->load->model('kernel/KSensor');
     $handle = fopen("tmp/" . $sub . ".csv", "r");
@@ -159,7 +158,6 @@ class KGenerador extends CI_Model{
           if($sum > 0){
               $l = explode(";", $buffer);
               if($l[31] > 0 ||  $l[33] > 0 || $l[34] > 0){
-
                 $nac = 'V';
                 $cedula = $this->completarCero(9, $l[0], '0');
                 $tiptrn = '1';
