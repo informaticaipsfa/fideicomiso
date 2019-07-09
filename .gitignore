@@ -23,12 +23,6 @@ _testmain.go
 *.test
 *.prof
 
-*/application/config/config.php
-*application/config/config.php
-
-*/application/config/database.php
-*application/config/database.php
-
 tmp/*.txt
 tmp/*.csv
 tmp/*.zip

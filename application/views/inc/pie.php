@@ -3,53 +3,41 @@
     <?php $this->load->view('inc/mensaje.php');?>
 
 
-    <!-- jQuery 2.1.4 -->
-    <script src="<?php echo base_url()?>assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="<?php echo base_url()?>assets/bootstrap/js/bootstrap.min.js"></script>
-    <!--
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-     SlimScroll -->
-    <script src="<?php echo base_url()?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="<?php echo base_url()?>assets/plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="<?php echo base_url()?>assets/dist/js/app.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="<?php echo base_url()?>assets/dist/js/demo.js"></script> 
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/notify/bootstrap-notify.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-file-input/js/plugins/piexif.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-file-input/js/plugins/purify.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-file-input/js/plugins/sortable.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-file-input/js/fileinput.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-file-input/js/locales/es.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-file-input/themes/fa/theme.min.js"></script>
 
-    <script src="<?php echo base_url()?>assets/plugins/datatables/jquery.dataTables.min.js"></script> 
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/dist/js/adminlte.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/datatables.net/js/dataTables.buttons.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/datatables.net/js/buttons.print.min.js"></script>
 
-    <script src="<?php echo base_url()?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script> 
-    <script src="<?php echo base_url()?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script> 
-    <script src="<?php echo base_url()?>assets/plugins/datatables/dataTables.buttons.min.js"></script> 
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/datatables.net-bs/js/dataTables.select.min.js"></script>
 
-    <script src="<?php echo base_url()?>assets/plugins/datatables/dataTables.select.min.js"></script> 
-    <script src="<?php echo base_url()?>assets/plugins/datatables/dataTables.editor.min.js"></script> 
-    
 
-    <script src="<?php echo base_url()?>assets/plugins/datatables/buttons.print.min.js"></script> 
-
-    
-    <!--Date-->
-    <!-- Select2 -->
-    <script src="<?php echo base_url()?>assets/plugins/select2/select2.full.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/barcode/dist/JsBarcode.all.js"></script>
     <!-- InputMask -->
-    <script src="<?php echo base_url()?>assets/plugins/input-mask/jquery.inputmask.js"></script>
-    <script src="<?php echo base_url()?>assets/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-    <!-- date-range-picker -->
-    <script src="<?php echo base_url()?>assets/moment/moment.min.js"></script>
-    <script src="<?php echo base_url()?>assets/plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- bootstrap datepicker -->
-    <script src="<?php echo base_url()?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
-    <!-- bootstrap color picker -->
-    <script src="<?php echo base_url()?>assets/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
-
-
-
-
-    <!-- iCheck -->
-    <script src="<?php echo base_url()?>assets/plugins/iCheck/icheck.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/formato/numeral.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/moment/min/moment.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/iCheck/icheck.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bootstrap-waitingfor/bootstrap-waitingfor.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/fancy/dist/jquery.fancybox.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/accounting/accounting.min.js"></script>
+    <script src="<?php echo __RUTA_PLUGINS?>/bower_components/bs-stepper/bs-stepper.min.js"></script>
 
 
   <!--FIN DATE-->
@@ -176,4 +164,4 @@
       });
     </script>
 
-    <script src="<?php echo base_url()?>application/modules/panel/views/js/gblmenu.js"></script>
+    <script src="<?php echo base_url()?>application/views/js/gblmenu.js"></script>

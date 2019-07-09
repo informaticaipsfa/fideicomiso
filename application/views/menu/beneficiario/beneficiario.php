@@ -460,11 +460,6 @@
             </div>
           </div>
 
-
-
-
-
-
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
@@ -472,13 +467,13 @@
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.6.7
         </div>
-        <strong>Copyright &copy; 2015-2016 Instituto de Previsión Social.</strong> Todos los derechos.
+        <strong>Copyright &copy; 2018-2019 Instituto de Previsión Social.</strong> Todos los derechos.
       </footer>
 
 
     </div><!-- ./wrapper -->
 
     <?php $this->load->view('inc/pie.php');?>
-    <script src="<?php echo base_url()?>application/modules/panel/views/js/dbasico.js"></script>
+    <script src="<?php echo base_url()?>application/views/js/dbasico.js"></script>
   </body>
 </html>

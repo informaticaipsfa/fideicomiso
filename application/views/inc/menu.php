@@ -1,6 +1,6 @@
         
 
-        <ul class="sidebar-menu" id="navegacion-menu">
+        <ul class="sidebar-menu tree" id="navegacion-menu" data-widget="tree">
             
             
         </ul>

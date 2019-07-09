@@ -36,9 +36,9 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
 
-    <p class="login-box-msg"><img src="<?php echo base_url()?>/application/modules/panel/views/img/ipsfa.png"style="width: 50%"><br>Inicio de Sesión</p>
+    <p class="login-box-msg"><img src="<?php echo base_url()?>application/views/img/ipsfa.png"style="width: 50%"><br>Inicio de Sesión</p>
 
-    <form action="<?php echo base_url();?>index.php/panel/Login/validarUsuario" method="post">
+    <form action="<?php echo base_url();?>index.php/Login/validarUsuario" method="post">
       <div class="form-group has-feedback">
         <input type="text" class="form-control" placeholder="Usuario" name='usuario'>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>

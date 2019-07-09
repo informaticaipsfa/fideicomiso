@@ -35,7 +35,7 @@
                 <div class="icon">
                   <i class="ion ion-person-stalker"></i>
                 </div>
-                <a href="<?php echo base_url()?>index.php/panel/Panel/beneficiario" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo base_url()?>index.php/Panel/beneficiario" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div> 
 
@@ -50,7 +50,7 @@
                 <div class="icon">
                   <i class="ion ion-card"></i>
                 </div>
-                <a href="<?php echo base_url()?>index.php/panel/Panel/finiquitos" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo base_url()?>index.php/Panel/finiquitos" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -65,7 +65,7 @@
                 <div class="icon">
                   <i class="ion ion-calculator"></i>
                 </div>
-                <a href="<?php echo base_url()?>index.php/panel/Panel/anticipo" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo base_url()?>index.php/Panel/anticipo" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -80,7 +80,7 @@
                 <div class="icon">
                   <i class="ion ion-printer"></i>
                 </div>
-                <a href="<?php echo base_url()?>index.php/panel/Panel/reporte" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?php echo base_url()?>index.php/Panel/reporte" class="small-box-footer">Continuar <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -95,7 +95,7 @@
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.6.7
         </div>
-        <strong>Copyright &copy; 2015-2016 Instituto de Previsión Social.</strong> Todos los derechos.
+        <strong>Copyright &copy; 2018-2019 Instituto de Previsión Social.</strong> Todos los derechos.
       </footer>
 
     </div><!-- ./wrapper -->

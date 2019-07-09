@@ -13,7 +13,7 @@
 date_default_timezone_set ( 'America/Caracas' );
 define ('__CONTROLADOR', 'Login');
 
-class Login extends MY_Controller {
+class Login extends CI_Controller {
 	
 	function __construct(){
 		parent::__construct();
@@ -40,7 +40,7 @@ class Login extends MY_Controller {
 
 	protected function inicio(){
 
-		header('Location: ' . base_url() . 'index.php/panel/Panel/index');
+		header('Location: ' . base_url() . 'index.php/Panel/index');
 	}
 	/* 
 	| ------------------------------------------------------------

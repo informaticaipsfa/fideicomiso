@@ -377,7 +377,7 @@
 </div><!-- ./wrapper -->
 
 <?php $this->load->view('inc/pie.php');?>
-<script src="<?php echo base_url()?>application/modules/panel/views/js/administrar.js"></script>
+<script src="<?php echo base_url()?>application/views/js/administrar.js"></script>
 </body>
 </html>
 

@@ -67,7 +67,7 @@ class Iniciar extends CI_Model {
   }
 
   private function _salir() {
-    redirect('panel/Login/salir');
+    redirect('Login/salir');
   }
 
   function msj(){

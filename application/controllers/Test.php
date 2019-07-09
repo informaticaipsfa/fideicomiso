@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 date_default_timezone_set ( 'America/Caracas' );
 define ('__CONTROLADOR', 'panel');
-class Test extends MY_Controller {
+class Test extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();

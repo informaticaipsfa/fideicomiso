@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 date_default_timezone_set ( 'America/Caracas' );
 define ('__CONTROLADOR', 'panel');
-class Panel extends MY_Controller {
+define ('__RUTA_PLUGINS', 'http://192.168.6.45/SSSIFANBW/');
+class Panel extends CI_Controller {
 
 	var $_DIRECTIVA = array();
 
