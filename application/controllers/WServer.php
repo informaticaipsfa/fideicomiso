@@ -1,6 +1,7 @@
 <?php
 
 
+
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 /** @noinspection PhpIncludeInspection */
 require APPPATH . '/libraries/REST_Controller.php';
@@ -22,35 +23,15 @@ use Restserver\Libraries\REST_Controller;
 class WServer extends REST_Controller{
 	
 	public function __construct(){
-		parent::__construct();
-		
-	}
-
-	/**
-	public function index_get(){
-		
-
-		$this->load->model('comun/DBSpace');
-		//$this->load->model('kernel/KCargador');
-		//$Beneficiario = $this->KCargador->ConsultarBeneficiario($this->get('id'));
-		$sCon = "SELECT cedula,nombres,apellidos FROM beneficiario  WHERE status_id=201 LIMIT 100";
-		$rs = $this->DBSpace->consultar($sCon);
-	
-		$lst = array();
-		$i = 1;
-		foreach ($rs->rs as $c => $v) {
-			$lst[] = (array)$v;
-		}
-		
-		$this->response($lst);
-		
-	}
-	**/
+        parent::__construct();
+        $this->load->helper('url'); 
+        
+    }
 
 	public function index_get(){
-		$r = "1";
+		$r = "175";
 
-		if ($r == "192.168.6.65") {
+		if ($r == "192.168.6.45") {
 			$this->response(['acceso no permitido'],404);
 			//return FALSE;
 		}else{
@@ -197,8 +178,23 @@ class WServer extends REST_Controller{
 
 	public function book_get(){
 		$this->response([
-	'returned from delete:' => $this->get('id'),
-	]);
+			'returned from delete:' => $this->get('id'),
+		]);
+	}
+
+	public function consultarbeneficiario_get($cedula = '', $fecha = ''){
+		$this->load->model('beneficiario/MBeneficiario');
+		$this->load->model('beneficiario/MHistorialMovimiento');
+		$this->load->model('beneficiario/MOrdenPago');
+
+		$this->MBeneficiario->obtenerID($cedula, $fecha);
+
+		$this->MBeneficiario->HistorialOrdenPagos = $this->MOrdenPago->listarPorCedula($cedula);
+		$this->MBeneficiario->HistorialDetalleMovimiento = $this->MHistorialMovimiento->listarDetalle($cedula);
+
+
+		
+		$this->response($this->MBeneficiario);
 	}
 		
 }

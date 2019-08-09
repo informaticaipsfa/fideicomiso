@@ -16,7 +16,7 @@ class Panel extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->library('session');		
-		if(!isset($_SESSION['usuario']))$this->salir();
+		//if(!isset($_SESSION['usuario']))$this->salir();
 	}
 
 	public function verificar(){
