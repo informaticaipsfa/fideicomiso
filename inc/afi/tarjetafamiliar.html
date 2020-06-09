@@ -1,0 +1,70 @@
+<div class="box box-primary" id="_bxFamiliarTarjeta">
+  <div class="box-body box-profile">
+    <img class="profile-user-img img-responsive" style="width:180px" src="images/ndisponible.jpg"  onerror="this.src='images/ndisponible.jpg'"  alt="Foto del Militar" id="_imgfamiliar">
+    <h3 class="profile-username text-center"></h3>
+    <p class="text-muted text-center" id ="_fcedula">
+
+    </p>
+    <ul class="list-group list-group-unbordered">
+      <li class="list-group-item">
+        <b>Fecha Nacimiento</b> <a class="pull-right" id="_ffnacimiento"></a>
+      </li>
+       <li class="list-group-item">
+        <b>Ingreso al IPSFA</b> <a class="pull-right" id=""></a>
+      </li>
+      
+     <li class="list-group-item" id="tarjetaPensionSobreviviente" style="display:none">
+        <label>Pensión (%):</label> 
+      <div class="input-group input-group">
+          <input type="text" class="form-control" id="txtPensionSobreviviente" value="0" maxlength="5" disabled="disabled" onkeypress="return Util.SoloNumero(event,this)">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-success btn-flat btn-md" id="btnPensionSobreviviente"
+            onClick="AsignarPensionSobreviviente()" disabled="disabled"><i class="fa fa-exchange"></i></button>
+          </span>
+      </div>
+    </li>
+    <li class="list-group-item" id="liEstatusPensionf" style="display:none">           
+        <label>Estatus de la pensión: </label> <a class="pull-right" id="lblFilaF" style="display:none"></a>
+        <div class="input-group">
+            <select class="js-states form-control"                                 
+                style="width: 100%" required="" aria-hidden="true" id="cmbSituacionPagof" disabled="disabled">
+                <option value="" selected></option>
+                <option value="200">PENDIENTE POR ACTUALIZAR</option>
+                <option value="201">ACTIVO COBRANDO</option>
+                <option value="202">INACTIVO COBRANDO</option>
+                <option value="203">CUENTA BANCARIA ERRADA</option>
+                <option value="204">CEDULA ERRADA BANCO</option>
+                <option value="205">PARALIZADO POR DOCUMENTOS</option>
+                <option value="206">PARALIZADO POR CARNÉ</option>
+                <option value="207">PARALIZADO POR FE DE VIDA</option>
+                <option value="208">PARALIZADO POR CARTA DE SOLTERIA</option>
+                <option value="209">SIN COBRAR FALLECIDO</option>
+                <option value="210">PARALIZADO POR SAMAN</option>
+                <option value="211">PARALIZADO MAYOR 26 AÑOS</option>
+                <option value="212">FALLECIDO</option>
+                <option value="299">PARALIZADO SSSIFANB</option>
+                <option value="300">CAMBIO DE ESTATUS ACTIVO</option>
+
+            </select>
+            <span class="input-group-btn">
+                <button id="btnSituacionPagof" disabled="disabled" type="button" 
+                class="btn btn-flat bg-purple" onclick="ActualizarSituacionPagof()">
+                    <i class="fa fa-check"></i></button>
+            </span>
+        </div>        
+    </li>
+    <li class="list-group-item">
+      <b>Vencimiento Carnet</b> <a class="pull-right" id="_idFVCarnet"></a>
+    </li>
+    <li class="list-group-item">
+      <b>Carnet Afiliado</b> <a class="pull-right" ><a data-dismiss="modal"  onclick="VisualizarCarnetFamiliar()" id ="_bfcedula" attced="0" class="pull-right fa fa-print"></a></a>
+    </li>
+    <li class="list-group-item" id="_lblConstanciaPension">
+      <b>Constancia de Pensión</b> <a class="pull-right" ><a data-dismiss="modal"  onclick="ConstanciaPensionSobr()"  class="pull-right fa fa-print"></a></a>
+    </li>
+    <li class="list-group-item" id="_lblConstanciaPension">
+       <b>Fe de Vida</b> <a class="pull-right" ></a>
+     </li>
+   </ul>
+  </div>
+</div>

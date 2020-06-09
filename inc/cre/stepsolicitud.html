@@ -1,0 +1,366 @@
+    
+    </div>
+  
+    <div id="stepper-prestamo" class="bs-stepper">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#prest-l-1">
+          <a href="#">
+            <span class="bs-stepper-circle">1</span>
+            <span class="bs-stepper-label">Seleccionar</span>
+          </a>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#prest-l-2">
+          <a href="#">
+            <span class="bs-stepper-circle">2</span>
+            <span class="bs-stepper-label">Solicitud</span>
+          </a>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#prest-l-3">
+          <a href="#">
+            <span class="bs-stepper-circle">3</span>
+            <span class="bs-stepper-label">Amortización</span>
+          </a>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#prest-l-4">
+          <a href="#">
+            <span class="bs-stepper-circle">4</span>
+            <span class="bs-stepper-label">Detalles</span>
+          </a>
+        </div>
+        
+      </div>
+      <div class="bs-stepper-content">
+            <div id="prest-l-1" class="content">
+                <div class="row">
+                        <div class="col-lg-4 col-xs-6" >
+                            <a href="#" onclick="CargarPrestamo(0)">
+                                <div class="small-box bg-green">
+                                    <div class="inner">
+                                        <p>Departamento Prestamos</p>
+                                        <h2 id="_Crm">Prestamo<br>Personales</h2>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-balance-scale"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-lg-4 col-xs-6" >
+                            <a href="#" onclick="CargarPrestamo(1)">
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                            <p>Departamento Prestamos</p>
+                                        <h2 id="_Cam">Prestamos <br>Vacacionales</h2>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-heartbeat"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-lg-4 col-xs-6" >
+                            <a href="#" onclick="CargarPrestamo(2)">
+                                <div class="small-box bg-yellow">
+                                    <div class="inner">
+                                        <p>Departamento Prestamos</p>
+                                        <h2 id="_Cca">Crédito <br>Educativo</h2>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-file-text-o"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-lg-4 col-xs-6" >
+                            <a href="#" onclick="CargarPrestamo(3)">
+                                <div class="small-box bg-purple">
+                                    <div class="inner">
+                                        <p>Departamento Prestamos</p>
+                                        <h2 id="_Cfv">Parcelas <br>del  Cementerio</h2>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-ambulance"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-lg-4 col-xs-6" >
+                            <a href="#" onclick="CargarPrestamo(4)">
+                                <div class="small-box bg-red">
+                                    <div class="inner">
+                                        <p>Departamento Prestamos</p>
+                                        <h2 id="_Cma">Árticulos <br>Para el hogar</h2>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-hospital-o"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-lg-4 col-xs-6" >
+                            <a href="#" onclick="CargarPrestamo(5)">
+                                <div class="small-box bg-red">
+                                    <div class="inner">
+                                        <p>Departamento Prestamos</p>
+                                        <h2 id="_Cmatp">Mi Casa <br>Bien equipada</h2>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-medkit"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+            </div> <!-- Fin del primer stepper -->
+            <div id="prest-l-2" class="content">
+                <div class="row">                        
+                    <div class="form-group">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="alert alert-danger" role="alert" id="divPrAlert" style="display: none">        
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <label >Concepto:</label>
+                            <select class="js-states form-control" style="width: 100%" disabled="disabled"
+                                required aria-hidden="true" id="cmbConceptoPr" >
+                                <option value="0">PRESTAMO PERSONAL</option>
+                                <option value="1">PRESTAMO VACACIONAL</option>
+                                <option value="2">CREDITO EDUCATIVO</option>
+                                <option value="3">PARCELAS DEL CEMENTERIO</option>
+                                <option value="4">ARTICULOS PARA EL HOGAR</option>
+                                <option value="5">MI CASA BIEN EQUIPADA</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <label>Sueldo:</label>
+                            <input id="txtSueldoPr" class="form-control" type="text" onblur="PrCalcularPorcentaje()">                            
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <label>Aporte de Capital:</label>
+                            <input id="txtAportePr" class="form-control" type="text" >                            
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <label>Monto:</label>
+                            <input id="txtMontoPr" class="form-control" type="text" onclick="CrHideAlert()">
+                        </div>
+
+                        <div class="col-md-3 col-sm-12">
+                            <label >Cuotas por años:</label>
+                            <select class="js-states form-control" style="width: 100%" 
+                                required aria-hidden="true" id="cmbCuotasPr" >
+                                <option value="1" selected="selected">1 </option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </div>
+ 
+                        
+                        <div class="col-md-3 col-sm-6">
+                            <label>Tasa de Intereses:</label>
+                            
+                            <div class="input-group input-group">
+                                <input id="txtInteresPr" class="form-control" type="text">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success btn-flat btn-md" id="btndefuncion"
+                                    onClick="CalcularCuotasPr()" ><i class="fa fa-calculator"></i></button>
+                                </span>
+                            </div>
+                        </div>
+ 
+                    </div><!-- Fin de la primera fila -->
+
+
+                </div>
+
+                <div class="row">
+                        
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6">
+                                <label>Porcentaje Autoseguro:</label>
+                                <select class="js-states form-control" style="width: 100%" 
+                                    required aria-hidden="true" id="cmbPorcentajeAdm"   disabled="disabled">
+                                    <option value="1" selected="selected">1% DE AUTOSEGURO</option>
+                                    <option value="2">1% DE GASTOS ADMINISTRATIVOS</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <label>Cuota máxima mensual:</label>
+                                <input id="txtCuotaMaxima" class="form-control" type="text" disabled="disabled">
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <label>Cuota mensual:</label>
+                                <input id="txtCuotaMensual" class="form-control" type="text" disabled="disabled">
+                            </div>
+                        </div>
+                </div>
+
+                <div class="row">                        
+                    <div class="form-group">
+                        <hr>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6">
+                            <br>
+                            <button type="button" class="btn btn-warning pull-left" onclick="StepperPrestamo.previous();">
+                                Volver atrás&nbsp;&nbsp;</i>
+                            </button>
+                            
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <br>
+                            <button type="button" class="btn btn-primary pull-right" onclick="TablaAmortizacion()">
+                                Generar tabla de amortización&nbsp;&nbsp;</i>
+                            </button>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+            </div><!-- Fin del segundo stepper -->
+            <div id="prest-l-3" class="content"  style="height:400px">
+                                   
+                    <div id="_TblAmortizacion">
+
+                    </div>                
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6">
+                                <br>
+                                <button type="button" class="btn btn-warning pull-left" onclick="StepperPrestamo.previous();">
+                                    Volver atrás&nbsp;&nbsp;</i>
+                                </button>
+                                
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <br>
+                                <button type="button" class="btn btn-primary pull-right" onclick="PrResumen()">
+                                    Continuar&nbsp;&nbsp;</i>
+                                </button>
+                                
+                            </div>
+                        </div>
+                    </div>
+        
+            </div><!-- Fin del tercer stepper -->
+            <div id="prest-l-4" class="content"  style="height:400px">
+
+                <div class="row">
+                    
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="alert alert-danger" role="alert" id="divPrAlert" style="display: none">        
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <label>Concepto:</label>
+                                <input id="txtConceptoPrT" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <label>Cuota:</label>
+                                <input id="txtCuotaPrT" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <label>Capital:</label>
+                                <input id="txtCapitalPrT" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <label>Aporte Capital:</label>
+                                <input id="txtAportePrT" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <label>Plazo:</label>
+                                <input id="txtPlazoPr" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <label>Total Intereses:</label>
+                                <input id="txtTotalInteresPrT" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <label>Interes:</label>
+                                <input id="txtInteresPrT" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <label>Pagos Totales:</label>
+                                <input id="txtPagosPrT" class="form-control" type="text">
+                            </div>
+
+                            <div class="col-md-4 col-sm-4">
+                                <label>Porcentaje Autoseguro:</label>
+                                <input id="txtPorcentajePrT" class="form-control" type="text">
+                            </div>
+
+                            <div class="col-md-4 col-sm-4">
+                                <label>Total a depositar:</label>
+                                <input id="txtDepositoPrT" class="form-control" type="text">
+                            </div>
+                        </div>        
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6">
+                            <br>
+                            <button type="button" class="btn btn-warning pull-left" onclick="StepperPrestamo.previous();">
+                                Volver atrás&nbsp;&nbsp;</i>
+                            </button>
+                            
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <br>
+                            <button type="button" class="btn btn-primary " onclick="PrImprimir()">
+                                Imprimir&nbsp;&nbsp;</i>
+                            </button>
+                            <button type="button" class="btn btn-success pull-right" onclick="PrGuardar()">
+                                Guardar&nbsp;&nbsp;</i>
+                            </button>                            
+                        </div>
+                    </div>
+                </div>
+            </div><!-- Fin del cuarto stepper -->
+        </div>
+    </div>
+
+
+
+
+
+
+   
+      

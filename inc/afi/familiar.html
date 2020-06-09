@@ -1,0 +1,36 @@
+<div class="box box-primary box-solid" id="_bxFamiliar">
+  <div class="box-header with-border">
+    <h3 class="box-title">Datos Basicos del Familiar</h3>
+  </div>
+  <div class="box-body">
+    <div id="_tblFamiliares">
+      <!-- Ahora se crean desde consultar.afiliado.js ( Function :-> FamiliaresHTML() ) -->
+    </div>
+ </div>
+ <div class="overlay" id="_cargandofam" style="display:none">
+    <i class="fa fa-refresh fa-spin"></i>
+</div>
+  <div class="modal-footer">
+      <div class="row">
+        <div class="col-md-4">
+            <div id="divPensionSobreviviente">
+                
+            </div>
+        </div>  
+        <div class="col-md-8">
+            <button type="button" id="btnModFamiliar" class="btn btn-md btn-info prvsalvar hide" onclick="ModificarFamiliar()">
+              <i class="fa fa-user-plus"></i>&nbsp;&nbsp;Nuevo familiar</button>
+            <button type="button" id="btnDerechoACrecer" class="btn btn-md bg-maroon derechoacrecer hide" 
+          onclick="RecalcularDerechoACrecer()">
+              <i class="fa fa-calculator"></i>&nbsp;&nbsp;Recalcular acrecer </button>
+            <button type="button" id="btnActualizarSobreviviente" class="btn btn-md bg-purple derechoacrecer hide" 
+            onclick="AplicarDerechoACrecer()">
+                <i class="fa fa-paperclip"></i>&nbsp;&nbsp;Actualizar sobrevivientes </button>
+        </div>  
+      </div>
+      
+
+     
+  </div>
+</div>
+</div>

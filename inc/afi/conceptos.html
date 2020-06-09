@@ -1,0 +1,226 @@
+<div class="col-md-7 col-lg-7" id="_conceptos">
+    
+        <div class="row" style="padding:5px; padding-bottom:-5px">
+                <div class="form-horizontal" id="_frmFormulas">
+                    <div class="box box-success ">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Listado De Variables</h3>
+                            <div class="pull-right box-tools">
+                                    
+                            </div>
+                        </div>
+                        <div class="box-body" id="_TblFormulas" style="height: 200px; ">
+                                <div class="chip"  onclick="fnxC('componente')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    componente                                
+                                </div>
+                                <div class="chip"  onclick="fnxC('grado')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    grado
+                                </div>
+                                <div class="chip"  onclick="fnxC('porcentaje_pension')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    porcentaje pensión
+                                </div>
+                                <div class="chip"  onclick="fnxC('sueldo_basico')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    sueldo básico                                    
+                                </div>
+                                
+                                <div class="chip" onclick="fnxC('tiempo_servicio')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                              
+                                    tiempo de servicio
+                                </div>
+                                <div class="chip" onclick="fnxC('hijos')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                  
+                                    hijos
+                                </div>
+                                <div class="chip" onclick="fnxC('calculo')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                  
+                                    calculo por monto fijo ó 3%
+                                </div>
+                                <div class="chip"  onclick="fnxC('total_primas')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    total primas
+                                </div>
+                                <div class="chip"  onclick="fnxC('sueldo_minimo')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    sueldo minimo
+                                </div>
+                                <div class="chip"  onclick="fnxC('unidad_tributaria')">
+                                        <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                        unidad tributaria
+                                </div>
+                                <div class="chip"  onclick="fnxC('sueldo_mensual')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    sueldo mensual
+                                </div>
+
+
+                                <div class="chip"  onclick="fnxC('bono_recreacional')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    bono recreacional
+                                </div>
+
+                                <div class="chip"  onclick="fnxC('bono_fin_ano')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    bono fin ano
+                                </div>
+
+                                <div class="chip"  onclick="fnxC('pension_integral')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    pension integral
+                                </div>
+
+                                <div class="chip"  onclick="fnxC('pension_diaria_integral')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    pension diaria integral
+                                </div>
+
+                                <div class="chip"  onclick="fnxC('aguinaldo')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    aguinaldo
+                                </div>
+
+                                <div class="chip"  onclick="fnxC('sueldo_mensual')">
+                                    <i class="fa  fa-plus-square"></i>&nbsp;&nbsp;                                 
+                                    sueldo mensual
+                                </div>
+
+                        </div>
+                        <div class="overlay" id="_cargandof" style="display:none">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="row" style="padding:5px; margin-top: -15px">
+            <div class="form-horizontal" id="_frmConceptos">
+                <div class="box box-primary ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Crear Conceptos</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-md-4 col-sm-4">
+                                <label>Código</label>
+                                <input  id="txtCodigo" class="form-control"  type="text" required>
+                                <input  id="txtCode" type="hidden">
+                            </div>
+                            <div class="col-md-8 col-sm-8">
+                                <label>Descripción / Estructura</label>
+                                <input  id="txtDescripcion" class="form-control"  type="text"
+                                required>
+                            </div>
+                        </div> <!-- Grupo nombres-->
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <label>Formula</label>
+                                <textarea  id="txtFormula" class="form-control" required 
+                                style="height: 103px;"></textarea>
+                            </div>
+                        </div> <!-- Grupo nombres-->
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-4">
+                                <label>Cuenta Contable</label>
+                                <input  id="txtCuentaContable" class="form-control"  type="text" required >
+                                
+                            </div>
+                            <div class="col-md-3 col-sm-4">
+                                <label>Tipo</label>
+                                <select id="cmbTipo" class="form-control" required >
+                                    <option value="1" selected>ASIGNACIONES</option>
+                                    <option value="0">DEDUCCION DE LEY</option>
+                                    <option value="2">OTRAS ASIGNACIONES</option>
+                                    <option value="3">OTRAS DEDUCCIONES</option>
+                                    <option value="98">AHORROS</option>
+                                    <option value="99">OPERACIONES INDIVIDUALES</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-4">
+                                <label>Estatus</label>
+                                <select id="cmbEstatus" class="form-control" required >
+                                    <option value="1" selected>ACTIVO</option>
+                                    <option value="0">INACTIVO</option>
+                                </select>
+                            </div>
+                        </div> <!-- Grupo nombres-->
+
+                        <div class="form-group">                          
+                            <div class="col-md-6 col-sm-4">
+                                <label>Partida Presupuestaria</label>
+                                <input id="txtPresupuesto" class="form-control"  type="text" required>
+                            </div>
+                            
+                        </div> <!-- Grupo nombres-->
+
+                        <div class="form-group" style="display:none">
+                            <div class="col-md-6 col-sm-12">
+                                <label>Componente</label>
+                                <select id="cmbComponente" class="form-control" required >
+                                    <option value="TODOS" selected>Todos los componentes</option>
+                                    <option value="EJB">EJERCITO BOLIVARIANO</option>
+                                    <option value="AMB">ARMADA BOLIVARIANA</option>
+                                    <option value="GNB">GUARDIA NACIONAL BOLIVARIANA</option>
+                                    <option value="AVB">AVIACION BOLIVARIANA</option>
+                                </select>
+                            </div>
+                           
+                            <div class="col-md-6 col-sm-12">
+                                <label>Grado</label>
+                                <select id="cmbGrado" class="form-control" required >
+                                    <option value="TODOS" selected>Todos los grados</option>
+                                    <option value="1">Inactivo</option>
+                                </select>
+                            </div>
+                        </div> <!-- Grupo nombres-->
+                        
+                        
+                    </div> <!-- Fin de body-->
+                    <div class="overlay" id="_cargando" style="display:none">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                    <div class="box-footer">
+                        <button onclick="AgregarConceptos()" class="btn btn-success pull-right" >Salvar Datos</button>                
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+</div>
+<div class="col-md-5 col-lg-5" id="_listado">
+    
+        <div class="row" style="padding:5px">
+            <div class="form-horizontal" id="_frmConceptos">
+                <div class="box box-warning ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Listado Conceptos</h3>
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-sm daterange pull-right" onclick="PrepararConceptos()"
+                            data-toggle="tooltip" title="Actualizar">
+                            <i class="fa fa-refresh"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body" id="_TblConceptos" style="height: 600px; ">
+                        <table id="tblConcepto" class="ui celled table table-bordered table-striped dataTable" cellspacing="0" width="100%" 
+                        role="grid" aria-describedby="example1_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>CUENTA</th>                                            
+                                    <th>PARTIDA </th>
+                                    <th>DESCRIPCION</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="overlay" id="_cargandol" style="display:none">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+</div>
